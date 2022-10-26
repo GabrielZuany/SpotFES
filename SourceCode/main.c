@@ -1,9 +1,7 @@
 #include <stdio.h>
+#include "tMusica.h"
 
+int main(int argc, char *argv[]){
 
-int main () {
-
-    //toróide
-    //pelor amor de deus n, n fala isso
     return 0;
 }
