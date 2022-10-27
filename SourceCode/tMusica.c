@@ -3,7 +3,7 @@
 #include "tPropriedades.h"
 
 struct tMusica{
-    char *id_musicas; //hash alfanumerico
+    char id_musicas[25]; //hash alfanumerico
     char *nome;
     int popularidade;
     float duracao_ms;
