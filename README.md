@@ -1,19 +1,6 @@
 # INF16153 - Programação II - DI/UFES
 # Trabalho Prático  I -  SpotFES
 
-
-Prof. Filipe Multz
-
-Prof. Vinicíus Mota 
-
-**Data de entrega: 17/11/2022**
-
-**Grupos**: Os trabalhos podem ser realizados em dupla.
-
-**Forma de Entrega:** Os arquivos .h, .c e o Makefile devem ser comprimidos em um arquivo ".zip" e submetidos por todos os integrantes do grupo na atividade do AVA. **Trabalhos entregues fora do prazo definido acima receberão nota zero**.
-
-**Entrevistas:** Haverá uma entrevista que definirá  a nota individual de cada aluno.
-
 ## 1. Objetivos
 
 O trabalho visa o desenvolvimento das habilidades de criação de structs, gerenciamento de memória alocada dinamicamente, manipulação de arquivos dos tipos texto e binário, organização e documentação correta de códigos-fonte e compilação automática de código. 
