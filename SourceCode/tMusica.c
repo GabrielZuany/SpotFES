@@ -13,3 +13,6 @@ struct tMusica{
     char *data_lancamento;
     tPropriedades *propriedades;
 };
+
+void teste(){
+}
