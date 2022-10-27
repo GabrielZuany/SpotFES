@@ -1,15 +1,5 @@
-# SpotFES
-
-## INF16153 - Programação II - DI/UFES
-## Trabalho Prático  I -  SpotFES
-
-**Data de entrega: 17/11/2022**
-
-**Grupos**: Os trabalhos podem ser realizados em dupla.
-
-**Forma de Entrega:** Os arquivos .h, .c e o Makefile devem ser comprimidos em um arquivo ".zip" e submetidos por todos os integrantes do grupo na atividade do AVA. **Trabalhos entregues fora do prazo definido acima receberão nota zero**.
-
-**Entrevistas:** Haverá uma entrevista que definirá  a nota individual de cada aluno.
+# INF16153 - Programação II - DI/UFES
+# Trabalho Prático  I -  SpotFES
 
 ## 1. Objetivos
 
@@ -23,7 +13,7 @@ Ao ser executado, o programa deve ler os dados de músicas e artistas de dois ar
 
 Deverão ser criadas estruturas Artista e Música para armazenar os dados de uma música e um artista específicos. A estrutura Música deverá conter um array alocado dinamicamente para armazenar os Artistas que produziram a música. As estruturas devem permitir armazenar todos os atributos (colunas) existentes nos arquivos CSV.
 
-O conjunto de todos os dados dos arquivos deverão ser lidos e adicionados à arrays alocados dinamicamente cuja área alocada deverá crescer por demanda. Inicialmente, o deverá ser alocado espaço para 100 itens e sempre que for necessário a área deverá ser realocada para o dobro do tamanho anterior (100 para 200, 200 para 400, 400 para 800 e assim por diante). 
+O conjunto de todos os dados dos arquivos deverão ser lidos e adicionados à arrays alocados dinamicamente cuja área alocada deverá crescer por demanda. Por exemplo, você pode alocar espaço para 100 itens e sempre que for necessário a área deverá ser realocada para o dobro do tamanho anterior (100 para 200, 200 para 400, 400 para 800 e assim por diante). A decisão do valor inicial faz parte do trabalho.
 
 O programa deve ter um menu com as seguintes opções: 
 
@@ -79,7 +69,7 @@ Os arquivos estão como  _Comma-Separated Values_ (CSV) dentro do diretório dat
 
 Os arquivos `artists_full.csv` e `tracks_full.csv` contém todas as informações que devem ser armazenadas em estruturas dos artistas e músicas respectivamente. 
 
-Para cada um destes arquivos, está sendo disponibilizado vários arquivos que são subconjuntos do arquivo original. Nestes casos, os arquivos são nomeados `artists_N.csv`e `tracks_N.csv` contém  as musicas de um subconjunto de `N` artistas.
+Para cada um destes arquivos, estão sendo disponibilizado vários arquivos que são subconjuntos do arquivo original. Nestes casos, os arquivos são nomeados `artists_N.csv`e `tracks_N.csv` contém  as musicas de um subconjunto de `N` artistas.
 
 
 ### Artistas 
@@ -93,7 +83,7 @@ Os arquivo de artistas possuem colunas:
   - Popularidade: Popularidade do artista entre 0 e 100.
 
 
-As colunas são separadas por ponto-e-vírgula ';' sendo que o gênero pode conter zerou ou mais valores, neste caso separados por um pipeline '|'.
+As colunas são separadas por ponto-e-vírgula ';' sendo que o gênero pode conter zero (representado por um hifen '-') ou mais valores, neste caso separados por um pipeline '|'.
 
 Exemplo de artistas no arquivo:
 ```
@@ -181,7 +171,7 @@ gcc -o main main.c -L . -lrecomendacao -I ./recomendacao/
 
 1. (10%) Inicialização. Capacidade de carregar os arquivos usando estruturas dinâmicas. 
 2. (5% cada) Funcionalidades  1 a 6   descritas na Seção 2.
-3. (10%) Recomendar músicas parecidas com uma playlist (Funcionalidade 7. 
+3. (10%) Recomendar músicas parecidas com uma playlist (Funcionalidade 7). 
 4. (10%) Gerar Relatório, salvando e carregando os arquivos de playlists corretamente.
 
 
