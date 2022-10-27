@@ -14,3 +14,6 @@ struct tPropriedades{
     float tempo;
     int time_signature;
 };
+
+void teste(){
+}
