@@ -1,6 +1,4 @@
 #include "tMusica.h"
-#include "tArtista.h"
-#include "tPropriedades.h"
 
 struct tMusica{
     char id_musicas[25]; //hash alfanumerico
@@ -11,7 +9,7 @@ struct tMusica{
     tArtista **artistas;
     char **id_artistas;
     char *data_lancamento;
-    tPropriedades *propriedades;
+    tPropriedades* propriedades;
 };
 
 void teste(){
