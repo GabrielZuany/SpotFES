@@ -5,7 +5,7 @@ artists="artists_full.csv"
 tracks="tracks_full.csv"
 
 #Numero de artistas
-N=300000
+N=30
 #Seleciona N artista aleatorios
 shuf -n$N $artists > "artists_$N.csv"
 
