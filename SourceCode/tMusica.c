@@ -5,12 +5,10 @@ struct tMusica{
     char *nome;
     int popularidade;
     float duracao_ms;
-    int explicit; //uso booleano.
+    int explicit; //uso booleano
     tArtista **artistas;
     char **id_artistas;
     char *data_lancamento;
     tPropriedades* propriedades;
 };
 
-void teste(){
-}

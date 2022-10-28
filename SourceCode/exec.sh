@@ -1,0 +1,1 @@
+./main ../data/artists_full.csv ../data/tracks_2.csv
