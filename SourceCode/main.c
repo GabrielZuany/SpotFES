@@ -21,7 +21,7 @@ int main(int argc, char *argv[]){
     do{
         ExibeMenu();
         scanf("%d",&opcao);
-        ExecutaOpcaoUsuario(opcao);
+        ExecutaOpcaoUsuario(opcao, pp_Musicas);
     }while(opcao != 0);
 
     fclose(tracks_file);

@@ -88,6 +88,7 @@ void Imprime_Musica(tMusica* p_Musica){
     printf("\n");
 }
 
+
 void Reseta_Informacoes(char* nomeMusica, char* idMusica, char* dataDeLancamento, char* idAgrupado){
     int i = 0, j = 0, k = 0, l = 0;
     int len_nome = strlen(nomeMusica), len_idMusica = strlen(idMusica), len_dataDeLancamento = strlen(dataDeLancamento), len_idAgrupado = strlen(idAgrupado);
@@ -142,4 +143,12 @@ char** RetornaLista_ID(char* str, tMusica* p_musica){
     }
     p_musica->qtd_artistas_na_musica = i;
     return ListaDeArtistas;
+}
+
+char* Retorna_NomeMusica(tMusica* p_Musica){
+    return p_Musica->nome;
+}
+
+tPropriedades* Retorna_PropriedadesDaMusica(tMusica* p_musica){
+    return p_musica->propriedades;
 }

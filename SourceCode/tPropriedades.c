@@ -34,7 +34,7 @@ tPropriedades* Insere_PropriedadesNaMusica(float danceabilidade,float  energia,i
     return p_propriedades; 
 }
 
-void ImprimePropriedadesDaMusisca(tPropriedades* p_propriedades){
+void Imprime_PropriedadesDaMusisca(tPropriedades* p_propriedades){
     printf("%f;%f;%d;%f;%d;%f;%f;%f;%f;%f;%f;%d", p_propriedades->danceability, p_propriedades->energy, p_propriedades->key, p_propriedades->loudness, p_propriedades->mode, 
     p_propriedades->speechiness, p_propriedades->acousticness, p_propriedades->instrumentalness, p_propriedades->liveness, p_propriedades->valence, p_propriedades->tempo, p_propriedades->time_signature);
 }

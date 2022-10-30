@@ -1,10 +1,13 @@
 #include "FuncoesPrincipais.h"
 
+
+// --------- Interatividade com o Usuário ----------
+
 void ExibeMenu(){
-    printf("0 - Sair\n1 - Buscar musicas\n2 - Listar musica\n3 - Criar playlist\n4 - Listar todas as playlists\n5 - Listar uma playlist\n6 - Adicionar musica na playlist\n7 - Recomendar musica parecida\n8 - Gerar relatorio\n-> ");
+    printf("\nEscolha uma opcao\n0 - Sair\n1 - Buscar musicas\n2 - Listar musica\n3 - Criar playlist\n4 - Listar todas as playlists\n5 - Listar uma playlist\n6 - Adicionar musica na playlist\n7 - Recomendar musica parecida\n8 - Gerar relatorio\n-> ");
 }
 
-void ExecutaOpcaoUsuario(int opcao){
+void ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas){
 
     switch (opcao) 
     {
@@ -12,10 +15,10 @@ void ExecutaOpcaoUsuario(int opcao){
         /* sair */
         break;
     case 1:
-        //BuscarMusicas();
+        BuscarMusicas(pp_Musicas);
         break;
     case 2:
-        //ListarMusica();
+        ListarMusica(pp_Musicas);
         break;
     case 3:
         //CriarPlaylist();
@@ -40,7 +43,46 @@ void ExecutaOpcaoUsuario(int opcao){
     }
 }
 
+void BuscarMusicas(tMusica** pp_Musicas){
+    char texto[50];
+    scanf("%*c");
+    scanf("%s", texto);
+    int qtd = Acesso_QuantidadeMusicas(0, FALSO);
+    int encontrei = 0;
 
+    for(int i = 0; i<qtd; i++){
+
+        if(strstr(Retorna_NomeMusica(pp_Musicas[i]), texto )){
+            Imprime_Musica(pp_Musicas[i]);
+            encontrei = 1;
+        }
+    }
+    if(encontrei == 0){
+        printf("Não encontrei nenhuma musica na base de dados\n");
+    }
+}
+
+void ListarMusica(tMusica** pp_Musicas){
+    int qtd = Acesso_QuantidadeMusicas(0, FALSO);
+    int indice;
+
+    scanf("%d", &indice);
+    scanf("%*c");
+    tPropriedades* propriedades = Retorna_PropriedadesDaMusica(pp_Musicas[indice]);
+    Imprime_PropriedadesDaMusisca(propriedades);
+
+    printf("\nDeseja executar a musica? S/N -> ");
+    char op;
+    scanf("%c", &op);
+    scanf("%*c");
+    if(op == 'S' || op =='s'){
+        //executa
+    }
+}
+
+
+
+// ----------- arquivos main --------------
 FILE* AbreArquivoArtistasCSV(int argc, char **argv){
     if(argc <= 1){
         printf("ERRO: O diretorio de arquivos de configuracao nao foi informado\n");

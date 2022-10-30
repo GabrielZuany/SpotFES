@@ -1,6 +1,13 @@
 1. Leitura do arquivo completo em tArtistas.c / tMusica.c;
-2. Operações do menu;
-3. Escrita em arquivos;
+
+2. OPERAÇÕES:
+    2.1 - CriarPlaylist;
+    2.2 - ListarTodasAsPlaylist;
+    2.3 - ListarUmaPlaylist;
+    2.4 - AdicionarMusicaNaPlaylist;
+    2.5 - RecomendarMusicaParecida;
+    2.6 - GerarRelatorio
+
 4. Comparação e cálculo das características.
+
 5. Free nos allocs.
-6. Bugs e afins...
