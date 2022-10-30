@@ -77,5 +77,12 @@ int Acesso_QuantidadeArtistas(int x, int trocar);
  */
 void Imprime_Artista(tArtista *artista);
 
+/**
+ * @brief Imprime a str dentro do tipo tArtistas
+ * 
+ * @param pp_Artistas vetor de structs
+ * @param qtdArtistas tamanho do vetor
+ */
 void ImprimeNomeDosArtistas(tArtista **pp_Artistas, int qtdArtistas);
+
 #endif

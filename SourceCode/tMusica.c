@@ -73,6 +73,8 @@ tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Arti
         Reseta_Informacoes(nomeMusica, idMusica, dataDeLancamento, idArtistas_AGRUPADO);
     }
 
+    Acesso_QuantidadeMusicas(i, VERDADE);
+
     return pp_Musicas;
 }
 
@@ -119,6 +121,14 @@ tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas){
     return artistas_da_musica;
 }
 
+int Acesso_QuantidadeMusicas(int x, int trocar){
+    static int qtdMusicas = 0;
+    if (trocar){
+        qtdMusicas = x;
+    }
+    return qtdMusicas;
+}
+
 char** RetornaLista_ID(char* str, tMusica* p_musica){
     char* id;
     char** ListaDeArtistas = (char**)malloc(sizeof(char)*(strlen(str)+1));
@@ -133,5 +143,3 @@ char** RetornaLista_ID(char* str, tMusica* p_musica){
     p_musica->qtd_artistas_na_musica = i;
     return ListaDeArtistas;
 }
-
-

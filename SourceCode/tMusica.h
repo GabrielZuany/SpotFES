@@ -86,4 +86,12 @@ void Reseta_Informacoes(char* nomeMusica, char* idMusica, char* dataDeLancamento
  */
 char** RetornaLista_ID(char* str, tMusica* p_musica);
 
+/**
+ * @brief recebe um valor booleano que informa se ela deve trocar o valor salvo e retorna-lo ou apenar retorna-lo sem alteracoes.
+ * @param x valor usado para a alteracao, caso ocorra.
+ * @param trocar valor booleano indicando se a função irá registrar o valor ou retornar.
+ */
+int Acesso_QuantidadeMusicas(int x, int trocar);
+
+
 #endif

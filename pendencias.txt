@@ -1,7 +1,6 @@
 1. Leitura do arquivo completo em tArtistas.c / tMusica.c;
-2. Menu;
-3. Operações do menu;
-4. Escrita em arquivos;
-5. Comparação e cálculo das características.
-6. Free nos allocs.
-7. Bugs e afins...
+2. Operações do menu;
+3. Escrita em arquivos;
+4. Comparação e cálculo das características.
+5. Free nos allocs.
+6. Bugs e afins...
