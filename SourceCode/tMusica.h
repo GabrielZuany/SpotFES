@@ -68,6 +68,14 @@ tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas);
 void Imprime_Musica(tMusica* p_Musica);
 
 /**
+ * @brief Retorna um ponteiro com str do nome.
+ * 
+ * @param p_Musica vetor na posição X a ser retornado o nome.
+ * @return char* ponteiro para a string
+ */
+char* Retorna_NomeMusica(tMusica* p_Musica);
+
+/**
  * @brief Reseta as strings com '\0' em todas as posições do array;
  * 
  * @param nomeMusica str a ser resetada.
@@ -85,5 +93,20 @@ void Reseta_Informacoes(char* nomeMusica, char* idMusica, char* dataDeLancamento
  * @return char** array de palavras.
  */
 char** RetornaLista_ID(char* str, tMusica* p_musica);
+
+/**
+ * @brief recebe um valor booleano que informa se ela deve trocar o valor salvo e retorna-lo ou apenar retorna-lo sem alteracoes.
+ * @param x valor usado para a alteracao, caso ocorra.
+ * @param trocar valor booleano indicando se a função irá registrar o valor ou retornar.
+ */
+int Acesso_QuantidadeMusicas(int x, int trocar);
+
+/**
+ * @brief Dada uma posição do vetor de structs retornar a struct interna referente às propriedades.
+ * 
+ * @param p_musica vetor de structs.
+ * @return tPropriedades* struct interna referente às propriedades.
+ */
+tPropriedades* Retorna_PropriedadesDaMusica(tMusica* p_musica);
 
 #endif

@@ -73,6 +73,8 @@ tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Arti
         Reseta_Informacoes(nomeMusica, idMusica, dataDeLancamento, idArtistas_AGRUPADO);
     }
 
+    Acesso_QuantidadeMusicas(i, VERDADE);
+
     return pp_Musicas;
 }
 
@@ -85,6 +87,7 @@ void Imprime_Musica(tMusica* p_Musica){
     //printf("   %d     %d ", p_Musica->qtd_artistas_na_musica, p_Musica->qtd_artistas_registrados_na_musica);
     printf("\n");
 }
+
 
 void Reseta_Informacoes(char* nomeMusica, char* idMusica, char* dataDeLancamento, char* idAgrupado){
     int i = 0, j = 0, k = 0, l = 0;
@@ -119,6 +122,14 @@ tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas){
     return artistas_da_musica;
 }
 
+int Acesso_QuantidadeMusicas(int x, int trocar){
+    static int qtdMusicas = 0;
+    if (trocar){
+        qtdMusicas = x;
+    }
+    return qtdMusicas;
+}
+
 char** RetornaLista_ID(char* str, tMusica* p_musica){
     char* id;
     char** ListaDeArtistas = (char**)malloc(sizeof(char)*(strlen(str)+1));
@@ -134,4 +145,10 @@ char** RetornaLista_ID(char* str, tMusica* p_musica){
     return ListaDeArtistas;
 }
 
+char* Retorna_NomeMusica(tMusica* p_Musica){
+    return p_Musica->nome;
+}
 
+tPropriedades* Retorna_PropriedadesDaMusica(tMusica* p_musica){
+    return p_musica->propriedades;
+}

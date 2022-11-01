@@ -31,6 +31,6 @@ tPropriedades* Insere_PropriedadesNaMusica(float danceabilidade,float  energia,i
  * 
  * @param p_propriedades struct com as informações a serem impressas.
  */
-void ImprimePropriedadesDaMusisca(tPropriedades* p_propriedades);
+void Imprime_PropriedadesDaMusisca(tPropriedades* p_propriedades);
 
 #endif
