@@ -83,6 +83,6 @@ void Imprime_Artista(tArtista *artista);
  * @param pp_Artistas vetor de structs
  * @param qtdArtistas tamanho do vetor
  */
-void ImprimeNomeDosArtistas(tArtista **pp_Artistas, int qtdArtistas);
+void Imprime_NomeDosArtistas(tArtista **pp_Artistas, int qtdArtistas);
 
 #endif

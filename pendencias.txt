@@ -1,10 +1,7 @@
 1. OPERAÇÕES:
-    1.1 - CriarPlaylist;
-    1.2 - ListarTodasAsPlaylist;
-    1.3 - ListarUmaPlaylist;
-    1.4 - AdicionarMusicaNaPlaylist;
-    1.5 - RecomendarMusicaParecida;
-    1.6 - GerarRelatorio
+    1.0 - ListarUmaMusica (falta propriedade dos artistas)
+    1.1 - RecomendarMusicaParecida;
+    1.2 - GerarRelatorio
 
 2. Comparação e cálculo das características.
 

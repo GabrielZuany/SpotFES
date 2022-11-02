@@ -10,10 +10,9 @@ struct tArtista{
     char *nome;
     int popularidade;
     int qtd_generos;
-};
+}; 
 
-//-----------------------inicializacao de ponteiro----------------------
-
+//===========================inicializacao de ponteiro===========================
 tArtista** Inicializa_PonteiroDePonteiroDeArtistas(){
     tArtista **pp_Artistas = NULL;
     pp_Artistas = (tArtista**)malloc(multiplicador_malloc * sizeof(tArtista*));
@@ -35,9 +34,7 @@ tArtista* Inicializa_PonteiroDeArtistas(char id[], float seguidores, char nome[]
     p_Artista->qtd_generos = 0;
     return p_Artista;
 }
-
-
-//--------------------leitura de arquivos--------------------------------
+//===========================leitura de arquivos=================================
 tArtista** Le_Artistas(FILE* artista_file, tArtista** pp_Artistas){
     tArtista *p_Artista = NULL;
     int i = 0;
@@ -58,23 +55,18 @@ tArtista** Le_Artistas(FILE* artista_file, tArtista** pp_Artistas){
         //Imprime_Artista(p_Artista);
         //printf("\n");
         i++;
-        
         Reseta_NomeGenero(nome, todos_generos);
     }
 
     int aux = 0;
-    aux = Acesso_QuantidadeArtistas(i, VERDADE); // guarda a quantidade de artistas na função p/ retornar depois.
+    aux = Acesso_QuantidadeArtistas(i, VERDADE); // guarda a quantidade de artistas na funcao p/ retornar depois.
     
     return pp_Artistas;
 }
-
-//--------------------------auxiliares--------------------------------
-
-char* Retorna_Id(tArtista* p_Artista){
-    return p_Artista->id;
+//===========================auxiliares==========================================
+char* Retorna_Id(tArtista* artista){
+    return artista->id;
 }
-
-
 void Reseta_NomeGenero(char* nome, char* genero){
     int i = 0;
     for(i=0; i<(strlen(nome)+1); i++){
@@ -84,7 +76,6 @@ void Reseta_NomeGenero(char* nome, char* genero){
         genero[i] = '\0';
     }
 }
-
 char** Retorna_ListaDeGeneros(char* str, tArtista* artista){
     char* genero;
     char** ListaDeGeneros = (char**)malloc(sizeof(char)*(strlen(str)+1));
@@ -101,7 +92,6 @@ char** Retorna_ListaDeGeneros(char* str, tArtista* artista){
     artista->qtd_generos = i;
     return ListaDeGeneros;
 }
-
 int Acesso_QuantidadeArtistas(int x, int trocar){
     static int qtdArtistas = 0;
     if (trocar){
@@ -109,9 +99,7 @@ int Acesso_QuantidadeArtistas(int x, int trocar){
     }
     return qtdArtistas;
 }
-
-//--------------------------impressao--------------------------------
-
+//===========================impressao==========================================
 void Imprime_Artista(tArtista *artista){
     printf("Id: %s Seguidores: %.1f ", artista->id, artista->seguidores);
     printf("Generos: ");
@@ -123,8 +111,7 @@ void Imprime_Artista(tArtista *artista){
 
     printf("Nome: %s Popularidade: %d\n", artista->nome, artista->popularidade);
 }
-
-void ImprimeNomeDosArtistas(tArtista **pp_Artistas, int qtdArtistasRegistrados){
+void Imprime_NomeDosArtistas(tArtista **pp_Artistas, int qtdArtistasRegistrados){
     int i = 0;
     for (i = 0; i < qtdArtistasRegistrados; i++){
         printf("%s ", pp_Artistas[i]->nome);

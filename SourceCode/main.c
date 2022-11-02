@@ -12,16 +12,22 @@ int main(int argc, char *argv[]){
     tArtista **pp_Artistas = NULL;
     pp_Artistas = Inicializa_PonteiroDePonteiroDeArtistas();
     pp_Artistas = Le_Artistas(artista_file,pp_Artistas);
+
     tMusica **pp_Musicas = NULL;
     pp_Musicas = Inicializa_PonteiroDePonteiroDeMusicas();
     pp_Musicas = Le_Musicas(tracks_file, pp_Musicas, pp_Artistas);
+
+    tPlaylist **pp_ListaPlaylist = NULL;
+    pp_ListaPlaylist = Inicializa_PonteiroDePonteiroDePlaylist();
+
 
     int opcao = 0;
     
     do{
         ExibeMenu();
         scanf("%d",&opcao);
-        ExecutaOpcaoUsuario(opcao, pp_Musicas);
+        scanf("%*c");
+        pp_ListaPlaylist = ExecutaOpcaoUsuario(opcao, pp_Musicas, pp_ListaPlaylist);
     }while(opcao != 0);
 
     fclose(tracks_file);

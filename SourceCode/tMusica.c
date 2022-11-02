@@ -15,6 +15,8 @@ struct tMusica{
     tPropriedades* propriedades;
     int qtd_artistas_registrados_na_musica;
     int qtd_artistas_na_musica;
+    int posicaoNoArray;
+    int qtd_PresencaEmPlaylist;
 };
 
 //-----------------------inicializacao de ponteiro----------------------
@@ -24,7 +26,7 @@ tMusica** Inicializa_PonteiroDePonteiroDeMusicas(){
     return pp_Musica;
 }
 
-tMusica* Inicializa_PonteiroDeMusica(char id_musica[], char nome[], int popularidade, int duracao, int explicit, char Nome_artistas[], char id_artistas[], char data_lancamento[], tArtista** pp_Artistas){
+tMusica* Inicializa_PonteiroDeMusica(char id_musica[], char nome[], int popularidade, int duracao, int explicit, char Nome_artistas[], char id_artistas[], char data_lancamento[], tArtista** pp_Artistas, int posicaoNoArray){
     int tamanhoNome = 0;
     tMusica* p_Musica = (tMusica*) malloc(sizeof(struct tMusica));
 
@@ -39,11 +41,18 @@ tMusica* Inicializa_PonteiroDeMusica(char id_musica[], char nome[], int populari
     p_Musica->popularidade = popularidade;
     p_Musica->duracao_ms = duracao;
     p_Musica->explicit = explicit;
+    p_Musica->posicaoNoArray = posicaoNoArray;
     p_Musica->id_artistas = RetornaLista_ID(id_artistas, p_Musica);
     p_Musica->artistas = Registra_ArtistasDaMusica(p_Musica, pp_Artistas);
+    p_Musica->qtd_PresencaEmPlaylist = 0;
     return p_Musica;
 }
 
+tMusica* Inicializa_PonteiroDeMusicaSemParamentros(){
+    tMusica *pMusica = NULL;
+    pMusica = (tMusica*)malloc(sizeof(struct tMusica));
+    return pMusica;
+}
 //--------------------leitura de arquivos--------------------------------
 tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Artistas){
     tMusica* p_Musica = NULL;
@@ -63,13 +72,13 @@ tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Arti
         fscanf(tracks_file,"%f;%f;%d;%f;%d;%f;%f;%f;%f;%f;%f;%d\n", &danceabilidade, &energia, &key, &loudness, &mode, &speechiness, &acousticness, &instrumentalness, &liveness, &valence, &tempo, &time_signature);
 
         pp_Musicas = (tMusica**)realloc(pp_Musicas, ((i+1) * sizeof(tMusica*)));
-        p_Musica = Inicializa_PonteiroDeMusica(idMusica, nomeMusica, popularidade, tempo_ms, explicit, nomeArtistas, idArtistas_AGRUPADO, dataDeLancamento, pp_Artistas);
+        p_Musica = Inicializa_PonteiroDeMusica(idMusica, nomeMusica, popularidade, tempo_ms, explicit, nomeArtistas, idArtistas_AGRUPADO, dataDeLancamento, pp_Artistas, i);
 
         p_Musica->propriedades = Insere_PropriedadesNaMusica(danceabilidade, energia, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature);
         pp_Musicas[i] = p_Musica;
-
-        Imprime_Musica(pp_Musicas[i]);
-        i++;        
+        
+        //Imprime_Musica(pp_Musicas[i]);
+        i++;    
         Reseta_Informacoes(nomeMusica, idMusica, dataDeLancamento, idArtistas_AGRUPADO);
     }
 
@@ -80,13 +89,6 @@ tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Arti
 
 //-----------------------auxiliares--------------------------
 
-void Imprime_Musica(tMusica* p_Musica){
-    printf("%s;%s;%d;%d;%d;%s;",p_Musica->id_musicas, p_Musica->nome, p_Musica->popularidade, p_Musica->duracao_ms, p_Musica->explicit, p_Musica->data_lancamento);
-    ImprimeNomeDosArtistas(p_Musica->artistas, p_Musica->qtd_artistas_registrados_na_musica);
-    //ImprimePropriedadesDaMusisca(p_Musica->propriedades);
-    //printf("   %d     %d ", p_Musica->qtd_artistas_na_musica, p_Musica->qtd_artistas_registrados_na_musica);
-    printf("\n");
-}
 
 
 void Reseta_Informacoes(char* nomeMusica, char* idMusica, char* dataDeLancamento, char* idAgrupado){
@@ -151,4 +153,41 @@ char* Retorna_NomeMusica(tMusica* p_Musica){
 
 tPropriedades* Retorna_PropriedadesDaMusica(tMusica* p_musica){
     return p_musica->propriedades;
+}
+
+char* Retorna_ID_Musica(tMusica* p_Musica){
+    return p_Musica->id_musicas;
+}
+
+void Incrementa_X_Em_qtd_PresencaEmPlaylist(tMusica* pMusica, int x){
+    pMusica->qtd_PresencaEmPlaylist += x;
+}
+
+//============================impressao========================================
+void Imprime_Funcao_BuscarMusica(tMusica *pMusica){
+    printf("Musica: %s\n", pMusica->nome);
+    printf("Indice: %d      ID: %s     \n", pMusica->posicaoNoArray, pMusica->id_musicas);
+    printf("Nome dos Artistas: ");
+    Imprime_NomeDosArtistas(pMusica->artistas, pMusica->qtd_artistas_registrados_na_musica);
+    printf("\n");
+    printf("--------------------------------------------\n");
+}
+
+
+void Imprime_ListarUmaMusica(tMusica* p_Musica){
+    Imprime_Funcao_BuscarMusica(p_Musica);
+    Imprime_PropriedadesDaMusisca(p_Musica->propriedades);
+    printf("\n");
+    printf("--------------------------------------------\n");
+}
+
+
+void ImprimeTodasAsMusicasDaPlaylist(tMusica **ppMusica, int qtdMusicas){
+    int i;
+    for(i = 0; i < qtdMusicas; i++){
+        printf("Posicao Na Playlist: %d Musica: %s\n", i, ppMusica[i]->nome);
+    }
+    if (qtdMusicas == 0){
+        printf("Nenhuma musica regristrada!\n");
+    }
 }
