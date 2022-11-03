@@ -16,7 +16,7 @@ void ExibeMenu(){
     printf("\nEscolha uma opcao\n0 - Sair\n1 - Buscar musicas\n2 - Listar musica\n3 - Criar playlist\n4 - Listar todas as playlists\n5 - Listar uma playlist\n6 - Adicionar musica na playlist\n7 - Recomendar musica parecida\n8 - Gerar relatorio\n-> ");
 }
 
-tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tPlaylist **pp_ListaPlaylist){
+tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_Artistas,tPlaylist **pp_ListaPlaylist, FILE *RelatorioMusica, FILE *RelatorioArtista){
     static int qtdPlaylist = 0;
     int indiceDaPlaylist = 0;
     int indiceDaMusica = 0;
@@ -63,7 +63,7 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tPlaylist **pp_
         scanf("%d%*c", &indiceDaMusica);
         
         pp_ListaPlaylist[indiceDaPlaylist] = Realoca_Memoria_PonteiroDeMusica(pp_ListaPlaylist[indiceDaPlaylist]);
-        pp_ListaPlaylist[indiceDaPlaylist] = Adiciona_MusicaPlaylist(indiceDaMusica, pp_ListaPlaylist[indiceDaPlaylist], pp_Musicas);
+        pp_ListaPlaylist[indiceDaPlaylist] = Adiciona_MusicaPlaylist(indiceDaMusica, pp_ListaPlaylist[indiceDaPlaylist], pp_Musicas, pp_Artistas);
         printf("musica adicionada na playlist %d com sucesso!\n", indiceDaPlaylist);
         break;
 
@@ -72,7 +72,8 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tPlaylist **pp_
         break;
 
     case Gerar_Relatorio:
-        //GerarRelatorio();
+        ImprimeRelatorioMusicaNoArquivo(RelatorioMusica, pp_Musicas);
+        ImprimeRelatorioArtistaNoArquivo(RelatorioArtista, pp_Artistas);
         break;
     default: printf("Opcao nao listada\n");
         break;
@@ -109,7 +110,7 @@ void ListarMusica(tMusica** pp_Musicas){// operacao numero 2
     scanf("%d", &indice);
     scanf("%*c");
     Imprime_ListarUmaMusica(pp_Musicas[indice]);
-
+    
     printf("\nDeseja executar a musica? S/N -> ");
     char op;
     scanf("%c", &op);

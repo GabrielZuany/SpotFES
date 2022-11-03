@@ -40,11 +40,13 @@ void Cria_ArquivoPlaylist(char nome[], tPlaylist* p_Playlist){
 
 
 
-tPlaylist* Adiciona_MusicaPlaylist(int indice, tPlaylist* p_Playlist, tMusica** pp_Musica){
+tPlaylist* Adiciona_MusicaPlaylist(int indice, tPlaylist* p_Playlist, tMusica** pp_Musica, tArtista **pp_Artistas){
     int posicao = p_Playlist->qtdMusica;
     p_Playlist->Lista_musicas[posicao] = Inicializa_PonteiroDeMusicaSemParamentros();
     p_Playlist->Lista_musicas[posicao] = pp_Musica[indice];
-    Incrementa_X_Em_qtd_PresencaEmPlaylist(pp_Musica[indice], 1);
+    Incrementa_X_Em_qtd_PresencaMusicaEmPlaylist(pp_Musica[indice], 1);
+    Incrementa_X_EmTodosOsArtistasDaMusica(pp_Musica[indice]);
+    
     p_Playlist->qtdMusica++;
     return p_Playlist;
 }

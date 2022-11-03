@@ -20,12 +20,14 @@ typedef struct tMusica tMusica;
  */
 tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Artistas);
 
+
 //==============================inicializacao de ponteiro==============================
 /**
  * @brief Aloca a memória necessária para inicializar o ponteiro de ponteiros.
  * @return tMusica** Array de ponteiros alocado na memória.
  */
 tMusica** Inicializa_PonteiroDePonteiroDeMusicas();
+
 /**
  * @brief Registra as informações da música atual para a struct na posição X do array.
  * @param id_musica str com código hash.
@@ -36,22 +38,25 @@ tMusica** Inicializa_PonteiroDePonteiroDeMusicas();
  * @param id_artistas código hash dos artistas.
  * @param data_lancamento data da música.
  * @param pp_Artistas Array de ponteiros.
+ * @param posicaoNoArray posicao no array da musica atual.
  * @return tMusica* ponteiro com as informações registradas.
  */
 tMusica* Inicializa_PonteiroDeMusica(char id_musica[], char nome[], int popularidade, int duracao, int explicit, char Nome_artistas[], char id_artistas[], char data_lancamento[], tArtista** pp_Artistas, int posicaoNoArray);
 
 /**
  * @brief Procura pela hash do artista da musica atual na base de dados lida no artists.csv
- * 
  * @param p_Musica ponteiro que indica a musica cujo hash será o parâmetro de busca.
  * @param pp_Artistas base de dados dos artidas cadastrados.
  * @return tArtista** array de artistas da musica com todas as informações indexadas.
  */
 tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas);
 
-
-
+/**
+ * @brief Aloca memoria para un struct do tipo.
+ * @return tMusica* ponteiro para a struct alocada na memoria.
+ */
 tMusica* Inicializa_PonteiroDeMusicaSemParamentros();
+
 //======================================aux==========================================
 /**
  * @brief Retorna um ponteiro com str do nome.
@@ -90,6 +95,7 @@ int Acesso_QuantidadeMusicas(int x, int trocar);
  * @return tPropriedades* struct interna referente às propriedades.
  */
 tPropriedades* Retorna_PropriedadesDaMusica(tMusica* p_musica);
+
 /**
  * @brief recebe um valor e armazena no ponteiro de musica
  * @param pMusica ponteiro do tipo musica
@@ -100,12 +106,25 @@ void Incrementa_X_Em_qtd_PresencaEmPlaylist(tMusica* pMusica, int x);
 /**
  * @brief retorna o ID da musica passada como parametro
  * @param p_Musica ponteiro do tipo musica
- * @return char* 
+ * @return char* id musica.
  */
 char* Retorna_ID_Musica(tMusica* p_Musica);
 
 
 //====================================impressao======================================
+/**
+ * @brief Imprime todos os artistas da musica atual.
+ * @param p_Musica musica atual.
+ */
+void Imprime_Artistas_da_Musica(tMusica* p_Musica);
+
+/**
+ * @brief contendo as músicas que foram adicionadas em playlists ordenadas de forma decrescente pelo número de playlists às quais elas foram adicionadas.
+ * @param RelatorioMusica arquivo aberto para escrita.
+ * @param pp_Musicas base de musicas.
+ */
+void ImprimeRelatorioMusicaNoArquivo(FILE * RelatorioMusica, tMusica **pp_Musicas);
+
 /**
  * @brief Imprime as informações relacionadas à música.
  * @param p_Musica ponteiro para a posicção de memória da struct.
@@ -130,11 +149,27 @@ void Imprime_ListarUmaMusica(tMusica* p_Musica);
  */
 void ImprimeTodasAsMusicasDaPlaylist(tMusica **ppMusica, int qtdMusicas);
 
+
+// ---------- aux ---------
+
 /**
  * @brief incrementa em X o valor de presencas em playlists armazenado no tipo tMusica
  * @param pMusica ponteiro do tipo tMusica
  * @param x valor a ser incrementado
  */
-void Incrementa_X_Em_qtd_PresencaEmPlaylist(tMusica* pMusica, int x);
+void Incrementa_X_Em_qtd_PresencaMusicaEmPlaylist(tMusica* pMusica, int x);
+
+/**
+ * @brief Retorna o maior numero de ocorrencias de musicas em uma playlist (necessario para relatorio de musicas).
+ * @param pp_Musicas base de musicas.
+ * @return int maior numero de ocorrencias de musicas em uma playlist.
+ */
+int MaiorNumeroDePresencas_Musicas(tMusica** pp_Musicas);
+
+/**
+ * @brief varre todos os artistas icrementando a quantidade de presenca.
+ * @param pMusica ponteiro da musica na posicao do vetor de musicas.
+ */
+void Incrementa_X_EmTodosOsArtistasDaMusica(tMusica *pMusica);
 
 #endif

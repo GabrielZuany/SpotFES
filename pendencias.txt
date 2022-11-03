@@ -1,7 +1,5 @@
 1. OPERAÇÕES:
-    1.0 - ListarUmaMusica (falta propriedade dos artistas)
     1.1 - RecomendarMusicaParecida;
-    1.2 - GerarRelatorio
 
 2. Comparação e cálculo das características.
 

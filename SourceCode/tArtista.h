@@ -6,7 +6,12 @@
 
 typedef struct tArtista tArtista;
 
-//-----------------------inicializacao de ponteiro----------------------
+//===========================inicializacao de ponteiro===========================
+/**
+ * @brief aloca espaco na memoria para um ponteiro do tipo tArtista*
+ * @return tArtista* 
+ */
+tArtista* Inicializa_PonteiroDeArtistas_SemParametros();
 
 /**
  * @brief Aloca memória para o ponteiro de ponteiro (lista de artistas do tipo tArtistas).
@@ -22,11 +27,8 @@ tArtista** Inicializa_PonteiroDePonteiroDeArtistas();
  * @param popularidade índice de popularidade do artista (0 a 100).
  * @return tArtista* endereço de memória (já alocada e preenchida) inicial do ponteiro.
  */
-tArtista* Inicializa_PonteiroDeArtistas(char id[], float seguidores, char nome[], int popularidade);
-
-
-
-//--------------------leitura de arquivos--------------------------------
+tArtista* Inicializa_PonteiroDeArtistas(char id[], float seguidores, char nome[], char todos_generos[], int popularidade);
+//===========================leitura de arquivos===========================
 
 /**
  * @brief le cada linha do arquivo de entrada separando cada informacao em variaveis locais em loop, inicializando um ponteiro de artista e armazenando esses valores nesse, depois salva o novo artista alocado em um array de artistas e continua o loop.
@@ -35,13 +37,9 @@ tArtista* Inicializa_PonteiroDeArtistas(char id[], float seguidores, char nome[]
  * @return tArtista** Vetor de ponteiros já preenchido (e alocado dinâmiacamente) com os artistas do arquivo.
  */
 tArtista** Le_Artistas(FILE* artista_file, tArtista** pp_Artistas);
-
-
-//-----------------------------auxilaires--------------------------------
-
+//===========================auxilaires====================================
 /**
  * @brief Retorna o hash do ponteiro dado.
- * 
  * @param p_Artista endereço de memória que o ponteiro aponta.
  * @return char* str com id.
  */
@@ -69,8 +67,21 @@ void Reseta_NomeGenero(char* nome, char* genero);
  */
 int Acesso_QuantidadeArtistas(int x, int trocar);
 
-//-----------------------------impressao---------------------------------
+/**
+ * @brief aumenta em x a quantidade de presencas de um artista
+ * @param pArtista ponteiro do tipo tArtista
+ * @param x valor a ser adicionado
+ */
+void Incrementa_X_Em_qtd_PresencaArtistaEmPlaylist(tArtista *pArtista, int x);
 
+/**
+ * @brief varre todos os artistas e retorna o maior numero de presencas
+ * @param pp_Artistas array de artistas
+ * @return maior numero de presencas
+ */
+int MaiorNumeroDePresencas_Artistas(tArtista** pp_Artistas);
+
+//============================impressao=============================
 /**
  * @brief  imprime os dados armazenados no ponteiro artista
  * @param artista ponteiro para o artista da posição atual do vetor de artistas.
@@ -79,10 +90,21 @@ void Imprime_Artista(tArtista *artista);
 
 /**
  * @brief Imprime a str dentro do tipo tArtistas
- * 
  * @param pp_Artistas vetor de structs
  * @param qtdArtistas tamanho do vetor
  */
 void Imprime_NomeDosArtistas(tArtista **pp_Artistas, int qtdArtistas);
+
+/**
+ * @brief gera relatorio contendo os artistas cujas músicas estão em playlists também ordenados pelo número de vezes que suas músicas foram adicionadas em playlists.
+ * @param RelatorioArtista arquivo aberto para escrita
+ * @param pp_Artistas array de artistas
+ */
+void ImprimeRelatorioArtistaNoArquivo(FILE * RelatorioArtista, tArtista** pp_Artistas);
+
+
+//==============testes==============
+
+
 
 #endif

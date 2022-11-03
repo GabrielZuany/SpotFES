@@ -38,9 +38,10 @@ void Cria_ArquivoPlaylist(char nome[], tPlaylist* p_Playlist);
  * @param indice indice da playlist desejada.
  * @param p_Playlist playlist atual.
  * @param pp_Musica base de musicas.
+ * @param pp_Artistas base de artistas.
  * @return tPlaylist* playlist atualizada após a inserção da musica.
  */
-tPlaylist* Adiciona_MusicaPlaylist(int indice, tPlaylist* p_Playlist, tMusica** pp_Musica);
+tPlaylist* Adiciona_MusicaPlaylist(int indice, tPlaylist* p_Playlist, tMusica** pp_Musica, tArtista** pp_Artistas);
 
 /**
  * @brief Solicita que o usuário digite o índice da playlist e apresenta na tela o nome da playlist e os títulos das músicas que ela possui.

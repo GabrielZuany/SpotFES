@@ -104,7 +104,7 @@ void Reseta_Informacoes(char* nomeMusica, char* idMusica, char* dataDeLancamento
 }
  
 tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas){
-    tArtista** artistas_da_musica = (tArtista**) malloc(sizeof(tArtista*));
+    tArtista** artistas_da_musica = (tArtista**)malloc(sizeof(tArtista*));
 
     int i, j, quantidadeArtistasRegistrados = 0;
 
@@ -113,6 +113,7 @@ tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas){
         for(j=0; j<Acesso_QuantidadeArtistas(0, FALSO); j++){
             
             if(strcmp(Retorna_Id(pp_Artistas[j]), p_Musica->id_artistas[i]) == 0){
+                artistas_da_musica[quantidadeArtistasRegistrados] = Inicializa_PonteiroDeArtistas_SemParametros();
                 artistas_da_musica[quantidadeArtistasRegistrados] = pp_Artistas[j];
                 quantidadeArtistasRegistrados++;
                 artistas_da_musica = (tArtista**)realloc(artistas_da_musica, (quantidadeArtistasRegistrados+1) * sizeof(tArtista*));
@@ -159,7 +160,7 @@ char* Retorna_ID_Musica(tMusica* p_Musica){
     return p_Musica->id_musicas;
 }
 
-void Incrementa_X_Em_qtd_PresencaEmPlaylist(tMusica* pMusica, int x){
+void Incrementa_X_Em_qtd_PresencaMusicaEmPlaylist(tMusica* pMusica, int x){
     pMusica->qtd_PresencaEmPlaylist += x;
 }
 
@@ -173,14 +174,13 @@ void Imprime_Funcao_BuscarMusica(tMusica *pMusica){
     printf("--------------------------------------------\n");
 }
 
-
 void Imprime_ListarUmaMusica(tMusica* p_Musica){
-    Imprime_Funcao_BuscarMusica(p_Musica);
+    printf("--------------------------------------------\n");
+    Imprime_Artistas_da_Musica(p_Musica);
     Imprime_PropriedadesDaMusisca(p_Musica->propriedades);
     printf("\n");
     printf("--------------------------------------------\n");
 }
-
 
 void ImprimeTodasAsMusicasDaPlaylist(tMusica **ppMusica, int qtdMusicas){
     int i;
@@ -189,5 +189,65 @@ void ImprimeTodasAsMusicasDaPlaylist(tMusica **ppMusica, int qtdMusicas){
     }
     if (qtdMusicas == 0){
         printf("Nenhuma musica regristrada!\n");
+    }
+}
+
+void Imprime_Artistas_da_Musica(tMusica* p_Musica){
+    int i;
+    int qtdArtistas = p_Musica->qtd_artistas_registrados_na_musica;
+
+    for(i=0; i<qtdArtistas; i++){
+        Imprime_Artista(p_Musica->artistas[i]);
+        printf("\n");
+    }
+}
+
+
+void ImprimeRelatorioMusicaNoArquivo(FILE * RelatorioMusica, tMusica **pp_Musicas){
+    int qtdPresencas = 0, iLinha = 0, iColuna = 0, qtdMusicas = 0;
+    qtdPresencas = MaiorNumeroDePresencas_Musicas(pp_Musicas);
+    qtdMusicas = Acesso_QuantidadeMusicas(0, FALSO);
+    int Acessou = 0, jaImprimiuAlgo = 0;
+
+    for (iLinha = qtdPresencas; iLinha > 0; iLinha--){
+        
+        for(iColuna = 0; iColuna < qtdMusicas; iColuna++){
+            
+            if (pp_Musicas[iColuna]->qtd_PresencaEmPlaylist == iLinha){
+                if (!Acessou){
+                    if(jaImprimiuAlgo){
+                        fprintf(RelatorioMusica,"\n");
+                    }
+                    fprintf(RelatorioMusica,"Musicas com %d presencas em playlists:\n", iLinha);
+                    Acessou = 1;
+                    jaImprimiuAlgo = 1;
+                }
+                
+                fprintf(RelatorioMusica, "Nome: %s\n", pp_Musicas[iColuna]->nome);
+            }
+        }
+        Acessou = 0;
+    }
+}
+
+int MaiorNumeroDePresencas_Musicas(tMusica** pp_Musicas){
+    int MaiorQtdPresenca = 0, i;
+    int qtdMusicas = Acesso_QuantidadeMusicas(0, FALSO);    
+
+    for(i=0; i<qtdMusicas; i++){
+        if(pp_Musicas[i] -> qtd_PresencaEmPlaylist > MaiorQtdPresenca){
+            MaiorQtdPresenca = pp_Musicas[i] -> qtd_PresencaEmPlaylist;
+        }
+    }
+
+    return MaiorQtdPresenca;
+}
+
+
+
+void Incrementa_X_EmTodosOsArtistasDaMusica(tMusica *pMusica){
+    int i = 0, qtdArtistasRegistrados = pMusica->qtd_artistas_registrados_na_musica;
+    for(i = 0; i < qtdArtistasRegistrados; i++){
+        Incrementa_X_Em_qtd_PresencaArtistaEmPlaylist(pMusica->artistas[i], 1);
     }
 }
