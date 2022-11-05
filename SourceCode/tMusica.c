@@ -2,21 +2,24 @@
 #define multiplicador_malloc 1
 #define FALSO 0
 #define VERDADE 1
+#define QTD_PROPRIEDADES_ANALISE 8
 
 struct tMusica{
+    char data_lancamento[11];
     char id_musicas[25]; //hash alfanumerico
+    char **id_artistas;
     char *nome;
     int popularidade;
     int duracao_ms;
     int explicit; //uso booleano
-    tArtista **artistas;
-    char **id_artistas;
-    char data_lancamento[11];
-    tPropriedades* propriedades;
     int qtd_artistas_registrados_na_musica;
     int qtd_artistas_na_musica;
-    int posicaoNoArray;
     int qtd_PresencaEmPlaylist;
+    int posicaoNoArray;
+    int acessada;
+    double DistanciaRelativaEntreDuasMusicas;
+    tArtista **artistas;
+    tPropriedades* propriedades;
 };
 
 //-----------------------inicializacao de ponteiro----------------------
@@ -45,6 +48,8 @@ tMusica* Inicializa_PonteiroDeMusica(char id_musica[], char nome[], int populari
     p_Musica->id_artistas = RetornaLista_ID(id_artistas, p_Musica);
     p_Musica->artistas = Registra_ArtistasDaMusica(p_Musica, pp_Artistas);
     p_Musica->qtd_PresencaEmPlaylist = 0;
+    p_Musica->DistanciaRelativaEntreDuasMusicas = (double)0;
+    p_Musica->acessada = 0;
     return p_Musica;
 }
 
@@ -53,6 +58,8 @@ tMusica* Inicializa_PonteiroDeMusicaSemParamentros(){
     pMusica = (tMusica*)malloc(sizeof(struct tMusica));
     return pMusica;
 }
+
+
 //--------------------leitura de arquivos--------------------------------
 tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Artistas){
     tMusica* p_Musica = NULL;
@@ -87,10 +94,8 @@ tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Arti
     return pp_Musicas;
 }
 
+
 //-----------------------auxiliares--------------------------
-
-
-
 void Reseta_Informacoes(char* nomeMusica, char* idMusica, char* dataDeLancamento, char* idAgrupado){
     int i = 0, j = 0, k = 0, l = 0;
     int len_nome = strlen(nomeMusica), len_idMusica = strlen(idMusica), len_dataDeLancamento = strlen(dataDeLancamento), len_idAgrupado = strlen(idAgrupado);
@@ -164,6 +169,114 @@ void Incrementa_X_Em_qtd_PresencaMusicaEmPlaylist(tMusica* pMusica, int x){
     pMusica->qtd_PresencaEmPlaylist += x;
 }
 
+void Incrementa_X_EmTodosOsArtistasDaMusica(tMusica *pMusica){
+    int i = 0, qtdArtistasRegistrados = pMusica->qtd_artistas_registrados_na_musica;
+    for(i = 0; i < qtdArtistasRegistrados; i++){
+        Incrementa_X_Em_qtd_PresencaArtistaEmPlaylist(pMusica->artistas[i], 1);
+    }
+}
+
+float AcessoProPriedadeXDaMusica(tMusica* pMusica, int indicePropriedade){
+    float x = RetornaPropriedadeXdaMusica(pMusica->propriedades, indicePropriedade);
+    return x;
+}
+
+void ImprimeXMusicasMaisProximas(tMusica **pp_Musicas, float *p_PropriedadesMusicaIdeal, int qtd_MelhoresMusicas){
+    int iMusicas = 0, iPropriedades = 0, posicao = 1, indiceAtualMelhores = 0, aux_encerrarLoop = 0;
+    int qtd_Musicas = Acesso_QuantidadeMusicas(0, FALSO);
+    float propriedades_MusicaAtual[QTD_PROPRIEDADES_ANALISE];
+    double DistanciaEuclidianaDeTodasAsMusicas[qtd_Musicas];
+
+
+    for(iMusicas = 0; iMusicas < qtd_Musicas; iMusicas++){
+        for(iPropriedades = 0; iPropriedades < QTD_PROPRIEDADES_ANALISE; iPropriedades++){
+            propriedades_MusicaAtual[iPropriedades] = RetornaPropriedadeXdaMusica(pp_Musicas[iMusicas]->propriedades, iPropriedades);
+        } 
+        pp_Musicas[iMusicas]->DistanciaRelativaEntreDuasMusicas = Calcula_DistanciaEuclidiana(propriedades_MusicaAtual , p_PropriedadesMusicaIdeal, QTD_PROPRIEDADES_ANALISE);
+        DistanciaEuclidianaDeTodasAsMusicas[iMusicas] = pp_Musicas[iMusicas]->DistanciaRelativaEntreDuasMusicas;
+    }
+    OrdenaVetorDouble(DistanciaEuclidianaDeTodasAsMusicas, qtd_Musicas);
+    
+    /*int i = 0;
+    for (i = 0; i < qtd_Musicas; i++){
+        printf("%d %lf \n", i, DistanciaEuclidianaDeTodasAsMusicas[i]);
+        
+    }*/
+
+    while (indiceAtualMelhores < qtd_MelhoresMusicas){
+
+        for(iMusicas = 0; iMusicas < qtd_Musicas; iMusicas++){
+
+            if( (pp_Musicas[iMusicas]->DistanciaRelativaEntreDuasMusicas == DistanciaEuclidianaDeTodasAsMusicas[indiceAtualMelhores]) && (pp_Musicas[iMusicas]->acessada == 0) ){
+
+                pp_Musicas[iMusicas]->acessada = 1;
+                printf("Musica no rank %d de aproximidade: ", posicao);
+                Imprime_Musica_Recomendada(pp_Musicas[iMusicas]);
+                printf("\nDistancia entre a playlist e a musica: %lf\n", pp_Musicas[iMusicas]->DistanciaRelativaEntreDuasMusicas);
+                printf("----------------------------------------------------------------------------------------------------------------------------------------------\n");
+                posicao++;
+                indiceAtualMelhores++;
+                break;
+            
+            }
+        }
+    }
+    ResetaMusicasAcessadas(pp_Musicas, qtd_Musicas);
+}
+
+void ResetaMusicasAcessadas(tMusica** pp_Musicas, int qtdMusicas){
+    int i=0;
+    for(; i<qtdMusicas; i++){
+        pp_Musicas[i]->acessada = 0;
+    }
+}
+
+int MenorEntreAeB(double distanciaEuclidiana[], int a, int qtd_Musicas){
+    int indiceMenor = a;
+    double menor = distanciaEuclidiana[a];
+    a++;
+    for(a; a < qtd_Musicas; a++){
+        if (distanciaEuclidiana[a] < menor){
+            menor = distanciaEuclidiana[a];
+            indiceMenor = a;
+        }
+    }
+    return indiceMenor;
+}
+
+void OrdenaVetorDouble(double* distanciaEuclidiana, int qtd_Musicas){
+    int i = 0, j, indiceMenor = 0; 
+    double aux = 0;
+
+    for(i = 0; i < qtd_Musicas; i++){
+        indiceMenor = MenorEntreAeB(distanciaEuclidiana, i+1, qtd_Musicas); 
+        if(distanciaEuclidiana[i] > distanciaEuclidiana[indiceMenor]){
+            aux = distanciaEuclidiana[i];
+            distanciaEuclidiana[i] = distanciaEuclidiana[indiceMenor];
+            distanciaEuclidiana[indiceMenor] = aux;
+        }
+    }
+}
+
+double Calcula_DistanciaEuclidiana(float* propriedades_MusicaAtual, float* p_PropriedadesMusicaIdeal, int qtd_propriedades){
+    int i;
+    double distancia_euclidiana = 0;
+
+    for(i=0; i<qtd_propriedades; i++){
+        distancia_euclidiana+= pow( (propriedades_MusicaAtual[i] - p_PropriedadesMusicaIdeal[i]) , 2);
+    }
+    distancia_euclidiana = sqrt(distancia_euclidiana);
+
+    return distancia_euclidiana;
+}
+
+float RetornaPropriedadeXdaMusica_ViaMusica(tMusica* pMusica, int indiceMusica){
+    float x = 0;
+    x = RetornaPropriedadeXdaMusica(pMusica->propriedades, indiceMusica);
+    return x;
+}
+
+
 //============================impressao========================================
 void Imprime_Funcao_BuscarMusica(tMusica *pMusica){
     printf("Musica: %s\n", pMusica->nome);
@@ -202,6 +315,9 @@ void Imprime_Artistas_da_Musica(tMusica* p_Musica){
     }
 }
 
+void Imprime_Musica_Recomendada(tMusica* p_Musica){
+    printf("PosicaoArray: %d | ID: %s | Nome: %s" ,p_Musica->posicaoNoArray, p_Musica->id_musicas, p_Musica->nome);
+}
 
 void ImprimeRelatorioMusicaNoArquivo(FILE * RelatorioMusica, tMusica **pp_Musicas){
     int qtdPresencas = 0, iLinha = 0, iColuna = 0, qtdMusicas = 0;
@@ -241,13 +357,4 @@ int MaiorNumeroDePresencas_Musicas(tMusica** pp_Musicas){
     }
 
     return MaiorQtdPresenca;
-}
-
-
-
-void Incrementa_X_EmTodosOsArtistasDaMusica(tMusica *pMusica){
-    int i = 0, qtdArtistasRegistrados = pMusica->qtd_artistas_registrados_na_musica;
-    for(i = 0; i < qtdArtistasRegistrados; i++){
-        Incrementa_X_Em_qtd_PresencaArtistaEmPlaylist(pMusica->artistas[i], 1);
-    }
 }

@@ -1,5 +1,5 @@
 #include "tPlaylist.h"
-
+#define QTD_PROPRIEDADES_ANALISE 8
 struct tPlaylist{
     int indice;
     char nome[50];
@@ -38,8 +38,6 @@ void Cria_ArquivoPlaylist(char nome[], tPlaylist* p_Playlist){
     system(path);
 }
 
-
-
 tPlaylist* Adiciona_MusicaPlaylist(int indice, tPlaylist* p_Playlist, tMusica** pp_Musica, tArtista **pp_Artistas){
     int posicao = p_Playlist->qtdMusica;
     p_Playlist->Lista_musicas[posicao] = Inicializa_PonteiroDeMusicaSemParamentros();
@@ -65,6 +63,32 @@ void Reseta_String(char *nome){
     for(i=0; i<strlen(nome);i++){
         nome[i] = '\0';
     }
+}
+
+void RecomendaMusicasParecidasComUmaPlaylist(tPlaylist* pPlaylist, tMusica **pp_Musicas,int qtd_MusicaParaRecomendar){
+    float *p_PropriedadesMusicaIdeal;
+    p_PropriedadesMusicaIdeal = (float*)malloc(QTD_PROPRIEDADES_ANALISE *sizeof(float));
+    p_PropriedadesMusicaIdeal = CalculaArrayPropriedadesMusicaIdeal(pPlaylist);
+    ImprimeXMusicasMaisProximas(pp_Musicas, p_PropriedadesMusicaIdeal, qtd_MusicaParaRecomendar);
+    free(p_PropriedadesMusicaIdeal);
+}
+
+float* CalculaArrayPropriedadesMusicaIdeal(tPlaylist *pPlaylist){
+    int iMusicas = 0, iPropriedades, j = 0, qtd_musicas = pPlaylist->qtdMusica;
+    float *p_PropriedadesMusicaIdeal = (float*)malloc(sizeof(float)*QTD_PROPRIEDADES_ANALISE);
+    float mediaPropriedades = 0;
+    
+    for(iPropriedades = 0; iPropriedades < QTD_PROPRIEDADES_ANALISE; iPropriedades++){
+        for(iMusicas = 0; iMusicas < qtd_musicas; iMusicas++){
+            
+           mediaPropriedades = mediaPropriedades + RetornaPropriedadeXdaMusica_ViaMusica(pPlaylist->Lista_musicas[iMusicas], iPropriedades);  
+        }
+        
+        mediaPropriedades = mediaPropriedades/(float)qtd_musicas;
+        p_PropriedadesMusicaIdeal[iPropriedades] = mediaPropriedades;
+        mediaPropriedades = 0;  
+    }
+    return p_PropriedadesMusicaIdeal;
 }
 
 //------------- Impressao -----------

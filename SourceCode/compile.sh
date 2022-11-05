@@ -1,0 +1,1 @@
+gcc -o main main.c FuncoesPrincipais.c tArtista.c tMusica.c tPlaylist.c tPropriedades.c -lm

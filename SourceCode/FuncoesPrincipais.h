@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "tPlaylist.h"
 #define VERDADE 1
 #define FALSO 0

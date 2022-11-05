@@ -62,4 +62,9 @@ void Imprime_ListarPlaylists(tPlaylist** pp_ListaPlaylist, int qtd_playlists);
  */
 void Reseta_String(char *nome);
 
+
+void RecomendaMusicasParecidasComUmaPlaylist(tPlaylist* pPlaylist, tMusica **pp_Musicas,int qtd_MusicaParaRecomendar);
+
+float* CalculaArrayPropriedadesMusicaIdeal(tPlaylist *pPlaylist);
+
 #endif

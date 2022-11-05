@@ -33,4 +33,7 @@ tPropriedades* Insere_PropriedadesNaMusica(float danceabilidade,float  energia,i
  */
 void Imprime_PropriedadesDaMusisca(tPropriedades* p_propriedades);
 
+
+float RetornaPropriedadeXdaMusica(tPropriedades* propriedades, int indice);
+
 #endif

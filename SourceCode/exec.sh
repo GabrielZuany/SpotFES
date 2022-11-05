@@ -1,1 +1,1 @@
-./main ../data/artists_2.csv ../data/tracks_2.csv
+./main ../data/artists_2.csv ../data/tracks_2.csv 

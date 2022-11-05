@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 
 typedef struct tMusica tMusica;
@@ -129,7 +130,7 @@ void ImprimeRelatorioMusicaNoArquivo(FILE * RelatorioMusica, tMusica **pp_Musica
  * @brief Imprime as informações relacionadas à música.
  * @param p_Musica ponteiro para a posicção de memória da struct.
  */
-void Imprime_Musica(tMusica* p_Musica);
+void Imprime_Musica_Recomendada(tMusica* p_Musica);
 
 /**
  * @brief Imprime atributos da musica
@@ -171,5 +172,22 @@ int MaiorNumeroDePresencas_Musicas(tMusica** pp_Musicas);
  * @param pMusica ponteiro da musica na posicao do vetor de musicas.
  */
 void Incrementa_X_EmTodosOsArtistasDaMusica(tMusica *pMusica);
+
+
+//=========novas===========
+
+void ResetaMusicasAcessadas(tMusica** pp_Musicas, int qtdMusicas);
+
+float RetornaPropriedadeXdaMusica_ViaMusica(tMusica* pMusica, int indiceMusica);
+
+int MenorEntreAeB(double distanciaEuclidiana[], int i, int qtd_Musicas);
+
+void OrdenaVetorDouble(double* distanciaEuclidiana, int qtd_Musicas);
+
+void ImprimeXMusicasMaisProximas(tMusica **pp_Musicas, float *p_PropriedadesMusicaIdeal, int x);
+
+double Calcula_DistanciaEuclidiana(float* propriedades_MusicaAtual, float* p_PropriedadesMusicaIdeal, int qtd_propriedades);
+
+float AcessoProPriedadeXDaMusica(tMusica* pMusica, int indicePropriedade);
 
 #endif

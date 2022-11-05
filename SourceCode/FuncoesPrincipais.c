@@ -20,8 +20,9 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
     static int qtdPlaylist = 0;
     int indiceDaPlaylist = 0;
     int indiceDaMusica = 0;
-    switch (opcao) 
-    {
+    int qtd_MusicaParaRecomendar = 0;
+
+    switch (opcao){
     case Sair:
         /* sair */
         break;
@@ -43,7 +44,6 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
         pp_ListaPlaylist[qtdPlaylist] = Inicializa_PonteiroDePlaylist(nome, qtdPlaylist);
         qtdPlaylist++;
         printf("Playlist criada com sucesso!\n");
-
         break;
 
     case Listar_Playlists:
@@ -67,14 +67,20 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
         printf("musica adicionada na playlist %d com sucesso!\n", indiceDaPlaylist);
         break;
 
-    case Recomendar_Musicas_Parecidas_Com_Uma_Playlist:
-        //RecomendarMusicaParecida();
+    case Recomendar_Musicas_Parecidas_Com_Uma_Playlist: // LEMBRAR DE LIBERAR O ARRAY CRIADO
+        printf("Indice da Playlist: ");
+        scanf("%d", &indiceDaPlaylist);
+        printf("Numero de musicas a serem recomendadas: ");
+        scanf("%d", &qtd_MusicaParaRecomendar);
+        RecomendaMusicasParecidasComUmaPlaylist(pp_ListaPlaylist[indiceDaPlaylist], pp_Musicas, qtd_MusicaParaRecomendar);
         break;
 
     case Gerar_Relatorio:
         ImprimeRelatorioMusicaNoArquivo(RelatorioMusica, pp_Musicas);
         ImprimeRelatorioArtistaNoArquivo(RelatorioArtista, pp_Artistas);
+        printf("Relatorio impresso com sucesso!\n");
         break;
+
     default: printf("Opcao nao listada\n");
         break;
     }
@@ -84,9 +90,9 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
 
 // ----------- operacoes------------------
 void BuscarMusicas(tMusica** pp_Musicas){// operacao numero 1
-    char texto[50];
+    char texto[300];
+    scanf("%[^\n]", texto);
     scanf("%*c");
-    scanf("%s", texto);
     int qtd = Acesso_QuantidadeMusicas(0, FALSO);
     int encontrei = 0;
 
