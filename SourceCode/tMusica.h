@@ -22,6 +22,7 @@ typedef struct tMusica tMusica;
 tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Artistas);
 
 
+
 //==============================inicializacao de ponteiro==============================
 /**
  * @brief Aloca a memória necessária para inicializar o ponteiro de ponteiros.
@@ -57,6 +58,8 @@ tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas);
  * @return tMusica* ponteiro para a struct alocada na memoria.
  */
 tMusica* Inicializa_PonteiroDeMusicaSemParamentros();
+
+
 
 //======================================aux==========================================
 /**
@@ -111,6 +114,77 @@ void Incrementa_X_Em_qtd_PresencaEmPlaylist(tMusica* pMusica, int x);
  */
 char* Retorna_ID_Musica(tMusica* p_Musica);
 
+/**
+ * @brief incrementa em X o valor de presencas em playlists armazenado no tipo tMusica
+ * @param pMusica ponteiro do tipo tMusica
+ * @param x valor a ser incrementado
+ */
+void Incrementa_X_Em_qtd_PresencaMusicaEmPlaylist(tMusica* pMusica, int x);
+
+/**
+ * @brief Retorna o maior numero de ocorrencias de musicas em uma playlist (necessario para relatorio de musicas).
+ * @param pp_Musicas base de musicas.
+ * @return int maior numero de ocorrencias de musicas em uma playlist.
+ */
+int MaiorNumeroDePresencas_Musicas(tMusica** pp_Musicas);
+
+/**
+ * @brief varre todos os artistas icrementando a quantidade de presenca.
+ * @param pMusica ponteiro da musica na posicao do vetor de musicas.
+ */
+void Incrementa_X_EmTodosOsArtistasDaMusica(tMusica *pMusica);
+
+/**
+ * @brief Reseta a variavel 'int acessada' para 0 de todas as musicas no ponteiro de ponteiro de tMusica.
+ * 
+ * @param pp_Musicas vetor de structs tMusica.
+ * @param qtdMusicas quantidade de musicas a serem resetadas.
+ */
+void ResetaMusicasAcessadas(tMusica** pp_Musicas, int qtdMusicas);
+
+/**
+ * @brief Dada uma musica, acessa e retorna o valor de determinada propriedade da musica.
+ * 
+ * @param pMusica musica a qual a propriedade será acessada.
+ * @param indicePropriedade indice da propriedade a ser acessada.
+ * @return float valor numérico contido na posição do array de propriedades.
+ */
+float RetornaPropriedadeXdaMusica_ViaMusica(tMusica* pMusica, int indicePropriedade);
+
+/**
+ * @brief calcula e retorna o indice da posição do menor valor entre um A e um B.
+ * @param distanciaEuclidiana vetor de valores em ponto flutuante.
+ * @param i posição no array.
+ * @param qtd_Musicas quantidade de vezes que será comparada.
+ * @return int indice da posição do menor.
+ */
+int MenorEntreAeB(double distanciaEuclidiana[], int i, int qtd_Musicas);
+
+/**
+ * @brief Ordena o vetor de todas as distancias euclidianas calculadas.
+ * @param distanciaEuclidiana array com todos os valores.
+ * @param qtd_Musicas quantidade de valores.
+ */
+void OrdenaVetorDouble(double* distanciaEuclidiana, int qtd_Musicas);
+
+/**
+ * @brief Calucla a distancia euclidiana entre duas musicas raiz{(somatorio de: [(x-y)^2]/n)}.
+ * @param propriedades_MusicaAtual propriedade da musica X.
+ * @param p_PropriedadesMusicaIdeal prppriedade da musica Y.
+ * @param qtd_propriedades quantidade de propriedades.
+ * @return double valor da distancia euclidiana.
+ */
+double Calcula_DistanciaEuclidiana(float* propriedades_MusicaAtual, float* p_PropriedadesMusicaIdeal, int qtd_propriedades);
+
+/**
+ * @brief Dada uma musica, acessa e retorna o valor de determinada propriedade da musica.
+ * @param pMusica musica a qual a propriedade será acessada.
+ * @param indicePropriedade indice da propriedade a ser acessada.
+ * @return float valor numérico contido na posição do array de propriedades.
+ */
+float AcessoProPriedadeXDaMusica(tMusica* pMusica, int indicePropriedade);
+
+
 
 //====================================impressao======================================
 /**
@@ -150,44 +224,13 @@ void Imprime_ListarUmaMusica(tMusica* p_Musica);
  */
 void ImprimeTodasAsMusicasDaPlaylist(tMusica **ppMusica, int qtdMusicas);
 
-
-// ---------- aux ---------
-
 /**
- * @brief incrementa em X o valor de presencas em playlists armazenado no tipo tMusica
- * @param pMusica ponteiro do tipo tMusica
- * @param x valor a ser incrementado
+ * @brief Calcula as muscias mais proximas em termos das distancias euclidianas e já imprime na stdout.
+ * @param pp_Musicas base de muscias a serem comparadas.
+ * @param p_PropriedadesMusicaIdeal a média dos valores das propriedades baseada nas musicas da playlist.
+ * @param x quantidade de musicas que serão recomendadas.
  */
-void Incrementa_X_Em_qtd_PresencaMusicaEmPlaylist(tMusica* pMusica, int x);
-
-/**
- * @brief Retorna o maior numero de ocorrencias de musicas em uma playlist (necessario para relatorio de musicas).
- * @param pp_Musicas base de musicas.
- * @return int maior numero de ocorrencias de musicas em uma playlist.
- */
-int MaiorNumeroDePresencas_Musicas(tMusica** pp_Musicas);
-
-/**
- * @brief varre todos os artistas icrementando a quantidade de presenca.
- * @param pMusica ponteiro da musica na posicao do vetor de musicas.
- */
-void Incrementa_X_EmTodosOsArtistasDaMusica(tMusica *pMusica);
-
-
-//=========novas===========
-
-void ResetaMusicasAcessadas(tMusica** pp_Musicas, int qtdMusicas);
-
-float RetornaPropriedadeXdaMusica_ViaMusica(tMusica* pMusica, int indiceMusica);
-
-int MenorEntreAeB(double distanciaEuclidiana[], int i, int qtd_Musicas);
-
-void OrdenaVetorDouble(double* distanciaEuclidiana, int qtd_Musicas);
-
 void ImprimeXMusicasMaisProximas(tMusica **pp_Musicas, float *p_PropriedadesMusicaIdeal, int x);
 
-double Calcula_DistanciaEuclidiana(float* propriedades_MusicaAtual, float* p_PropriedadesMusicaIdeal, int qtd_propriedades);
-
-float AcessoProPriedadeXDaMusica(tMusica* pMusica, int indicePropriedade);
 
 #endif

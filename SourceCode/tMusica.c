@@ -196,12 +196,6 @@ void ImprimeXMusicasMaisProximas(tMusica **pp_Musicas, float *p_PropriedadesMusi
         DistanciaEuclidianaDeTodasAsMusicas[iMusicas] = pp_Musicas[iMusicas]->DistanciaRelativaEntreDuasMusicas;
     }
     OrdenaVetorDouble(DistanciaEuclidianaDeTodasAsMusicas, qtd_Musicas);
-    
-    /*int i = 0;
-    for (i = 0; i < qtd_Musicas; i++){
-        printf("%d %lf \n", i, DistanciaEuclidianaDeTodasAsMusicas[i]);
-        
-    }*/
 
     while (indiceAtualMelhores < qtd_MelhoresMusicas){
 
@@ -270,9 +264,9 @@ double Calcula_DistanciaEuclidiana(float* propriedades_MusicaAtual, float* p_Pro
     return distancia_euclidiana;
 }
 
-float RetornaPropriedadeXdaMusica_ViaMusica(tMusica* pMusica, int indiceMusica){
+float RetornaPropriedadeXdaMusica_ViaMusica(tMusica* pMusica, int indicePropriedade){
     float x = 0;
-    x = RetornaPropriedadeXdaMusica(pMusica->propriedades, indiceMusica);
+    x = RetornaPropriedadeXdaMusica(pMusica->propriedades, indicePropriedade);
     return x;
 }
 

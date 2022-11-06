@@ -1,3 +1,3 @@
-1. Documentar novas funções.
+1. Free nos allocs.
 
-2. Free nos allocs.
+2. Rever código impedindo erros do usuário e procurando bugs.

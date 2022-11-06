@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 typedef struct tPropriedades tPropriedades;
 
 /**
@@ -25,7 +24,6 @@ typedef struct tPropriedades tPropriedades;
  */
 tPropriedades* Insere_PropriedadesNaMusica(float danceabilidade,float  energia,int key, float loudness, int mode, float speechiness, float acousticness, float instrumentalness, float liveness, float valence, float tempo, int time_signature);
 
-
 /**
  * @brief Imprime as propriedades da música.
  * 
@@ -33,7 +31,12 @@ tPropriedades* Insere_PropriedadesNaMusica(float danceabilidade,float  energia,i
  */
 void Imprime_PropriedadesDaMusisca(tPropriedades* p_propriedades);
 
-
+/**
+ * @brief Retorna o valor de uma propriedade da musica.
+ * @param propriedades propriedades registradas.
+ * @param indice posicao da propriedade desejada no array.
+ * @return float valor contido na posicao do array.
+ */
 float RetornaPropriedadeXdaMusica(tPropriedades* propriedades, int indice);
 
 #endif

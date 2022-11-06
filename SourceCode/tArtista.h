@@ -103,8 +103,4 @@ void Imprime_NomeDosArtistas(tArtista **pp_Artistas, int qtdArtistas);
 void ImprimeRelatorioArtistaNoArquivo(FILE * RelatorioArtista, tArtista** pp_Artistas);
 
 
-//==============testes==============
-
-
-
 #endif

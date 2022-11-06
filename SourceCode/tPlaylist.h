@@ -5,6 +5,8 @@
 
 typedef struct tPlaylist tPlaylist;
 
+
+//============================= inicializacao e alocacao dinamica ==================
 /**
  * @brief Aloca memoria para o ponteiro de ponteiro (lista de artistas do tipo tArtistas). 
  * @return tPlaylist** array de ponteiros de artista
@@ -33,6 +35,8 @@ tPlaylist* Realoca_Memoria_PonteiroDeMusica(tPlaylist* p_Playlist);
  */
 void Cria_ArquivoPlaylist(char nome[], tPlaylist* p_Playlist);
 
+
+//============================= aux ==================
 /**
  * @brief Solicita o índice de uma música e de uma playlist e adiciona a música a playlist
  * @param indice indice da playlist desejada.
@@ -43,6 +47,29 @@ void Cria_ArquivoPlaylist(char nome[], tPlaylist* p_Playlist);
  */
 tPlaylist* Adiciona_MusicaPlaylist(int indice, tPlaylist* p_Playlist, tMusica** pp_Musica, tArtista** pp_Artistas);
 
+/**
+ * @brief Reseta a string referente ao nome, setando todas as posições para '\0'.
+ * @param nome string a ser resetada.
+ */
+void Reseta_String(char *nome);
+
+/**
+ * @brief Recomenda as N musicas mais parecidas com a pseudomusica que representa a playlist.
+ * @param pPlaylist playlist desejada.
+ * @param pp_Musicas base de musicas registradas.
+ * @param qtd_MusicaParaRecomendar quantidade de musicas a serem recomendadas.
+ */
+void RecomendaMusicasParecidasComUmaPlaylist(tPlaylist* pPlaylist, tMusica **pp_Musicas,int qtd_MusicaParaRecomendar);
+
+/**
+ * @brief Calcula uma pseudomusica cuja cada caracteristica é a media do valor de cada propriedade.
+ * @param pPlaylist playlist a ser analisada.
+ * @return float* vetor com todas as prorpiedades calculadas.
+ */
+float* CalculaArrayPropriedadesMusicaIdeal(tPlaylist *pPlaylist);
+
+
+//============================= impressao ==============================================
 /**
  * @brief Solicita que o usuário digite o índice da playlist e apresenta na tela o nome da playlist e os títulos das músicas que ela possui.
  * @param p_Playlist playlist selecionada.
@@ -55,16 +82,5 @@ void Imprime_ListarUmaPlaylist(tPlaylist *p_Playlist);
  * @param qtd_playlists numero total de playlists.
  */
 void Imprime_ListarPlaylists(tPlaylist** pp_ListaPlaylist, int qtd_playlists);
-
-/**
- * @brief Reseta a string referente ao nome, setando todas as posições para '\0'.
- * @param nome string a ser resetada.
- */
-void Reseta_String(char *nome);
-
-
-void RecomendaMusicasParecidasComUmaPlaylist(tPlaylist* pPlaylist, tMusica **pp_Musicas,int qtd_MusicaParaRecomendar);
-
-float* CalculaArrayPropriedadesMusicaIdeal(tPlaylist *pPlaylist);
 
 #endif
