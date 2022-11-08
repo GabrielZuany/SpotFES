@@ -6,7 +6,7 @@
 typedef struct tPlaylist tPlaylist;
 
 
-//============================= inicializacao e alocacao dinamica ==================
+//============================= Alocação de Memória ==================
 /**
  * @brief Aloca memoria para o ponteiro de ponteiro (lista de artistas do tipo tArtistas). 
  * @return tPlaylist** array de ponteiros de artista
@@ -35,8 +35,23 @@ tPlaylist* Realoca_Memoria_PonteiroDeMusica(tPlaylist* p_Playlist);
  */
 void Cria_ArquivoPlaylist(char nome[], tPlaylist* p_Playlist);
 
+/**
+ * @brief Libera memoria alocada para todas as playlists.
+ * @param pp_playlist ponteiro de ponteiro: vetor de structs.
+ */
+void LiberaTodasAsPlaylist(tPlaylist** pp_playlist);
+
+
 
 //============================= aux ==================
+
+/**
+ * @brief recebe um valor booleano que informa se ela deve trocar o valor salvo e retorna-lo ou apenar retorna-lo sem alteracoes.
+ * @param x valor usado para a alteracao, caso ocorra.
+ * @param bool valor booleano indicando se a função irá registrar o valor ou retornar VERDADE  para registrar FALSO para retornar.
+ */
+int Acesso_QuantidadePlaylists(int qtdPlaylist, int bool);
+
 /**
  * @brief Solicita o índice de uma música e de uma playlist e adiciona a música a playlist
  * @param indice indice da playlist desejada.
@@ -82,5 +97,6 @@ void Imprime_ListarUmaPlaylist(tPlaylist *p_Playlist);
  * @param qtd_playlists numero total de playlists.
  */
 void Imprime_ListarPlaylists(tPlaylist** pp_ListaPlaylist, int qtd_playlists);
+
 
 #endif

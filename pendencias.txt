@@ -1,3 +1,7 @@
-1. Free nos allocs.
+1. Rever código impedindo erros do usuário e procurando bugs.
 
-2. Rever código impedindo erros do usuário e procurando bugs.
+2. Revisar o código.
+
+3. Makefile correto.
+
+4. Armazenar a playlist (arquivo binário ) e usa-la dps.

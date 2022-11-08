@@ -40,11 +40,16 @@ int main(int argc, char *argv[]){
         pp_ListaPlaylist = ExecutaOpcaoUsuario(opcao, pp_Musicas, pp_Artistas, pp_ListaPlaylist, RelatorioMusica, RelatorioArtista);
     }while(opcao != 0);
 
+    LiberaTodosOsArtistas(pp_Artistas);
+    LiberaTodasAsMusicas(pp_Musicas);
+    LiberaTodasAsPlaylist(pp_ListaPlaylist);
 
     fclose(RelatorioMusica);
     fclose(RelatorioArtista);
     fclose(tracks_file);
     fclose(artista_file);
+
+
     return 0;
 }
 

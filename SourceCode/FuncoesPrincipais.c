@@ -36,13 +36,14 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
         break;
 
     case Criar_Uma_Playlist:
-        pp_ListaPlaylist = realloc(pp_ListaPlaylist, (qtdPlaylist+1) * sizeof(tPlaylist*));
+        pp_ListaPlaylist = (tPlaylist** )realloc(pp_ListaPlaylist, (qtdPlaylist+1) * sizeof(tPlaylist*));
         printf("Nome da playlist: ");
-        char nome[50]; //talvez trocar para ponteiro
+        char nome[50] = "";
         Reseta_Str(nome);
         scanf("%[^\n]%*c", nome);
         pp_ListaPlaylist[qtdPlaylist] = Inicializa_PonteiroDePlaylist(nome, qtdPlaylist);
         qtdPlaylist++;
+        Acesso_QuantidadePlaylists(qtdPlaylist, VERDADE);
         printf("Playlist criada com sucesso!\n");
         break;
 
@@ -67,7 +68,7 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
         printf("musica adicionada na playlist %d com sucesso!\n", indiceDaPlaylist);
         break;
 
-    case Recomendar_Musicas_Parecidas_Com_Uma_Playlist: // LEMBRAR DE LIBERAR O ARRAY CRIADO
+    case Recomendar_Musicas_Parecidas_Com_Uma_Playlist: // LEMBRAR DE LIBERAR O ARRAY CRIADO ====> Liberado 
         printf("Indice da Playlist: ");
         scanf("%d", &indiceDaPlaylist);
         printf("Numero de musicas a serem recomendadas: ");

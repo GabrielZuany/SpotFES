@@ -8,12 +8,6 @@ typedef struct tArtista tArtista;
 
 //===========================inicializacao de ponteiro===========================
 /**
- * @brief aloca espaco na memoria para um ponteiro do tipo tArtista*
- * @return tArtista* 
- */
-tArtista* Inicializa_PonteiroDeArtistas_SemParametros();
-
-/**
  * @brief Aloca memória para o ponteiro de ponteiro (lista de artistas do tipo tArtistas).
  * @return tArtista** endereço de memória (já alocada) inicial do ponteiro (posição 0). 
  */
@@ -102,5 +96,17 @@ void Imprime_NomeDosArtistas(tArtista **pp_Artistas, int qtdArtistas);
  */
 void ImprimeRelatorioArtistaNoArquivo(FILE * RelatorioArtista, tArtista** pp_Artistas);
 
+//============liberacao de artistas=============
+/**
+ * @brief varre todos os artistas liberando-os
+ * @param pp_Artistas array de artistas
+ */
+void LiberaTodosOsArtistas(tArtista** pp_Artistas);
+
+/**
+ * @brief libera um unico artista
+ * @param pArtista ponteiro de artista
+ */
+void LiberaArtista(tArtista *pArtista);
 
 #endif

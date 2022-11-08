@@ -52,15 +52,6 @@ tMusica* Inicializa_PonteiroDeMusica(char id_musica[], char nome[], int populari
  * @return tArtista** array de artistas da musica com todas as informações indexadas.
  */
 tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas);
-
-/**
- * @brief Aloca memoria para un struct do tipo.
- * @return tMusica* ponteiro para a struct alocada na memoria.
- */
-tMusica* Inicializa_PonteiroDeMusicaSemParamentros();
-
-
-
 //======================================aux==========================================
 /**
  * @brief Retorna um ponteiro com str do nome.
@@ -232,5 +223,18 @@ void ImprimeTodasAsMusicasDaPlaylist(tMusica **ppMusica, int qtdMusicas);
  */
 void ImprimeXMusicasMaisProximas(tMusica **pp_Musicas, float *p_PropriedadesMusicaIdeal, int x);
 
+
+//==========================liberacao de musicas=====================
+/**
+ * @brief varre as musicas liberando-as
+ * @param pp_musica array de musicas
+ */
+void LiberaTodasAsMusicas(tMusica** pp_musica);
+
+/**
+ * @brief libera uma unica musica
+ * @param musica ponteiro de musica
+ */
+void LiberaMusica(tMusica* musica);
 
 #endif

@@ -6,7 +6,7 @@
 struct tArtista{
     char id[25]; //hash alfanumerico
     float seguidores;
-    char generos[1000]; //lista de generos
+    char *generos; //lista de generos
     char *nome;
     int popularidade;
     int qtd_generos;
@@ -29,7 +29,7 @@ tArtista* Inicializa_PonteiroDeArtistas(char id[], float seguidores, char nome[]
     tamanhoNome = strlen(nome);
     tamanhoGeneros = strlen(todos_generos);
     p_Artista->nome = (char*)malloc((tamanhoNome+1) * sizeof(char));
-    p_Artista->nome = (char*)malloc((tamanhoGeneros+1) * sizeof(char));
+    p_Artista->generos= (char*)malloc((tamanhoGeneros+1) * sizeof(char));
     strcpy(p_Artista->nome, nome);
     strcpy(p_Artista->generos, todos_generos);
 
@@ -41,16 +41,12 @@ tArtista* Inicializa_PonteiroDeArtistas(char id[], float seguidores, char nome[]
     p_Artista->qtd_PresencaEmPlaylist = 0;
     return p_Artista;
 }
-tArtista* Inicializa_PonteiroDeArtistas_SemParametros(){
-    tArtista *pArtista = NULL;
-    pArtista = (tArtista*)malloc(sizeof(struct tArtista));
-    return pArtista;
-}
+
 //===========================leitura de arquivos=================================
 tArtista** Le_Artistas(FILE* artista_file, tArtista** pp_Artistas){
     tArtista *p_Artista = NULL;
     int i = 0;
-    char todos_generos[1000], nome[1000], id[25];
+    char todos_generos[1000] = "", nome[1000] = "", id[25] = "";
     float seguidores = 0;
     int popularidade = 0;
     
@@ -162,3 +158,22 @@ void ImprimeRelatorioArtistaNoArquivo(FILE * RelatorioArtista, tArtista **pp_Art
     }
 }
 
+
+
+//===================== Liberação de memória =====================
+
+void LiberaTodosOsArtistas(tArtista** pp_Artistas){
+    int qtdArtistas = 0, i = 0;
+    qtdArtistas = Acesso_QuantidadeArtistas(0, FALSO);
+
+    for(i = 0; i < qtdArtistas; i++){
+        LiberaArtista(pp_Artistas[i]);
+    }
+    free(pp_Artistas);
+}
+
+void LiberaArtista(tArtista *pArtista){
+    free(pArtista->nome);
+    free(pArtista->generos);
+    free(pArtista);
+}

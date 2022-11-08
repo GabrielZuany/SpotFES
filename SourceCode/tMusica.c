@@ -53,19 +53,12 @@ tMusica* Inicializa_PonteiroDeMusica(char id_musica[], char nome[], int populari
     return p_Musica;
 }
 
-tMusica* Inicializa_PonteiroDeMusicaSemParamentros(){
-    tMusica *pMusica = NULL;
-    pMusica = (tMusica*)malloc(sizeof(struct tMusica));
-    return pMusica;
-}
-
 
 //--------------------leitura de arquivos--------------------------------
 tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Artistas){
     tMusica* p_Musica = NULL;
     int i = 0;
     tArtista **artistas;
-    char **id_artistas;
  
     //primeiro scanf
     char idMusica[25], nomeMusica[1000], nomeArtistas[10000], idArtistas_AGRUPADO[10000], dataDeLancamento[11];
@@ -118,7 +111,6 @@ tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas){
         for(j=0; j<Acesso_QuantidadeArtistas(0, FALSO); j++){
             
             if(strcmp(Retorna_Id(pp_Artistas[j]), p_Musica->id_artistas[i]) == 0){
-                artistas_da_musica[quantidadeArtistasRegistrados] = Inicializa_PonteiroDeArtistas_SemParametros();
                 artistas_da_musica[quantidadeArtistasRegistrados] = pp_Artistas[j];
                 quantidadeArtistasRegistrados++;
                 artistas_da_musica = (tArtista**)realloc(artistas_da_musica, (quantidadeArtistasRegistrados+1) * sizeof(tArtista*));
@@ -126,6 +118,7 @@ tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas){
             }
         }
     }
+    
     p_Musica->qtd_artistas_registrados_na_musica = quantidadeArtistasRegistrados;
     return artistas_da_musica;
 }
@@ -140,7 +133,7 @@ int Acesso_QuantidadeMusicas(int x, int trocar){
 
 char** RetornaLista_ID(char* str, tMusica* p_musica){
     char* id;
-    char** ListaDeArtistas = (char**)malloc(sizeof(char)*(strlen(str)+1));
+    char** ListaDeArtistas = (char**)malloc(sizeof(char*) * (strlen(str)+1));
     int i = 0;
     id = strtok (str,"|");
 
@@ -150,6 +143,7 @@ char** RetornaLista_ID(char* str, tMusica* p_musica){
         id = strtok (NULL,"|");
     }
     p_musica->qtd_artistas_na_musica = i;
+    free(id);
     return ListaDeArtistas;
 }
 
@@ -351,4 +345,24 @@ int MaiorNumeroDePresencas_Musicas(tMusica** pp_Musicas){
     }
 
     return MaiorQtdPresenca;
+}
+
+
+//======================== Liberação de memória ===========================
+
+void LiberaTodasAsMusicas(tMusica** pp_musica){
+    int qtd = Acesso_QuantidadeMusicas(0, FALSO);
+    int i = 0;
+    for(i=0; i<qtd; i++){
+        LiberaMusica(pp_musica[i]);
+        free(pp_musica[i]);
+    }
+    free(pp_musica);
+}
+
+void LiberaMusica(tMusica* musica){
+    free(musica->propriedades);
+    free(musica->nome);
+    free(musica->artistas);
+    free(musica->id_artistas);
 }

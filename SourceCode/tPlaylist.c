@@ -1,5 +1,6 @@
 #include "tPlaylist.h"
 #define QTD_PROPRIEDADES_ANALISE 8
+#define FALSO 0
 struct tPlaylist{
     int indice;
     char nome[50];
@@ -8,7 +9,7 @@ struct tPlaylist{
 };
 
 
-//----------inicializacao de ponteiro--------------
+//========================inicializacao de ponteiro========================
 tPlaylist** Inicializa_PonteiroDePonteiroDePlaylist(){
     tPlaylist  **pp_ListaPlaylist = NULL;
     pp_ListaPlaylist = (tPlaylist**)malloc(sizeof(tPlaylist*)); 
@@ -40,7 +41,6 @@ void Cria_ArquivoPlaylist(char nome[], tPlaylist* p_Playlist){
 
 tPlaylist* Adiciona_MusicaPlaylist(int indice, tPlaylist* p_Playlist, tMusica** pp_Musica, tArtista **pp_Artistas){
     int posicao = p_Playlist->qtdMusica;
-    p_Playlist->Lista_musicas[posicao] = Inicializa_PonteiroDeMusicaSemParamentros();
     p_Playlist->Lista_musicas[posicao] = pp_Musica[indice];
     Incrementa_X_Em_qtd_PresencaMusicaEmPlaylist(pp_Musica[indice], 1);
     Incrementa_X_EmTodosOsArtistasDaMusica(pp_Musica[indice]);
@@ -56,7 +56,7 @@ tPlaylist* Realoca_Memoria_PonteiroDeMusica(tPlaylist* p_Playlist){
     return p_Playlist;
 }   
 
-// ----------- auxiliares -----------
+//========================auxiliares========================
 
 void Reseta_String(char *nome){
     int i;
@@ -67,7 +67,6 @@ void Reseta_String(char *nome){
 
 void RecomendaMusicasParecidasComUmaPlaylist(tPlaylist* pPlaylist, tMusica **pp_Musicas,int qtd_MusicaParaRecomendar){
     float *p_PropriedadesMusicaIdeal;
-    p_PropriedadesMusicaIdeal = (float*)malloc(QTD_PROPRIEDADES_ANALISE *sizeof(float));
     p_PropriedadesMusicaIdeal = CalculaArrayPropriedadesMusicaIdeal(pPlaylist);
     ImprimeXMusicasMaisProximas(pp_Musicas, p_PropriedadesMusicaIdeal, qtd_MusicaParaRecomendar);
     free(p_PropriedadesMusicaIdeal);
@@ -91,7 +90,7 @@ float* CalculaArrayPropriedadesMusicaIdeal(tPlaylist *pPlaylist){
     return p_PropriedadesMusicaIdeal;
 }
 
-//------------- Impressao -----------
+//========================Impressao========================
 
 void Imprime_ListarUmaPlaylist(tPlaylist *p_Playlist){
     printf("===========================================================================\n");
@@ -109,4 +108,26 @@ void Imprime_ListarPlaylists(tPlaylist** pp_ListaPlaylist, int qtd_playlists){
         printf("Quantidade de musicas: %d\n\n", pp_ListaPlaylist[i]->qtdMusica);
     }
     printf("===========================================================================\n");
+}
+
+
+//===========================liberacao de playlist========================
+
+int Acesso_QuantidadePlaylists(int qtdPlaylist, int trocar){
+    static int x;
+    if (trocar){
+        x = qtdPlaylist;
+    }
+    return x;
+}
+
+void LiberaTodasAsPlaylist(tPlaylist** pp_playlist){
+    int qtd_playlists = Acesso_QuantidadePlaylists(0, FALSO);
+    int i;
+
+    for(i=0; i<qtd_playlists; i++){
+        free(pp_playlist[i]->Lista_musicas);
+        free(pp_playlist[i]);
+    }
+    free(pp_playlist);
 }

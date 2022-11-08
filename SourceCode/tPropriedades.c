@@ -13,7 +13,7 @@ struct tPropriedades{
     float valence;
     float tempo;
     int time_signature;
-    float arrayPropriedades[12];
+    float arrayPropriedades[8];
 };
 
 tPropriedades* Insere_PropriedadesNaMusica(float danceabilidade,float  energia,int key, float loudness, int mode, float speechiness, float acousticness, float instrumentalness, float liveness, float valence, float tempo, int time_signature){
