@@ -29,11 +29,18 @@ tPlaylist* Inicializa_PonteiroDePlaylist(char nome[], int indice);
 tPlaylist* Realoca_Memoria_PonteiroDeMusica(tPlaylist* p_Playlist);
 
 /**
- * @brief envia ao terminal comandos para criar uma pasta "Playlists/" e criar arquivos de playlists dado seus nomes.
- * @param nome nome da playlist.
- * @param p_Playlist playlist[pos_atual].
+ * @brief Cria pasta e arquivos binários que armazenam o conteúdo de cada playlist retornando um ponteiro para o caminho desse arquivo.
+ * @param nome nome da playlist para criar o .bat
+ * @return char* caminho do arquivo criado.
  */
-void Cria_ArquivoPlaylist(char nome[], tPlaylist* p_Playlist);
+char* Cria_ArquivoPlaylist_RetornandoCaminho(char nome[]);
+
+/**
+ * @brief Escreve no arquivo criado pela Cria_ArquivoPlaylist_RetornandoCaminho() o conteúdo registrado na playlist.
+ * @param playlist playlist a ser gravada.
+ * @param filepath caminho do arquivo.
+ */
+void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, char*filepath);
 
 /**
  * @brief Libera memoria alocada para todas as playlists.

@@ -30,7 +30,6 @@ int main(int argc, char *argv[]){
     tPlaylist **pp_ListaPlaylist = NULL;
     pp_ListaPlaylist = Inicializa_PonteiroDePonteiroDePlaylist();
 
-
     int opcao = 0;
     
     do{
@@ -39,6 +38,7 @@ int main(int argc, char *argv[]){
         scanf("%*c");
         pp_ListaPlaylist = ExecutaOpcaoUsuario(opcao, pp_Musicas, pp_Artistas, pp_ListaPlaylist, RelatorioMusica, RelatorioArtista);
     }while(opcao != 0);
+
 
     LiberaTodosOsArtistas(pp_Artistas);
     LiberaTodasAsMusicas(pp_Musicas);

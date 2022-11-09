@@ -23,20 +23,36 @@ tPlaylist* Inicializa_PonteiroDePlaylist(char nome[], int indice){
     strcpy(p_Playlist->nome, nome);
     p_Playlist->indice = indice;
     p_Playlist->qtdMusica = 0;
-    //Cria_ArquivoPlaylist(nome, p_Playlist);
     return p_Playlist;
 }
 
-void Cria_ArquivoPlaylist(char nome[], tPlaylist* p_Playlist){
-    char path[70];
-    Reseta_String(path);
-    strcat(path, "mkdir Playlists/");
-    system(path);
-    
-    Reseta_String(path);
-    strcat(path, "touch Playlists/");
+char* Cria_ArquivoPlaylist_RetornandoCaminho(char nome[]){
+    char* path = calloc(sizeof(char), 70);
+    char* command = calloc(sizeof(char), 70);
+
+    strcat(command, "mkdir ");
+    strcat(path, "../Playlists/");
+    strcat(command, path);
+    system(command);
+
+    free(command);// resetar o ponteiro.
+    command = calloc(sizeof(char), 70);
+
+    strcat(command, "touch ");
+    strcat(path, "../Playlists/");
     strcat(path, nome);
-    system(path);
+    strcat(path, ".bat");
+    strcat(command, path);
+    
+    system(command);
+    free(command);
+    return path;
+}
+
+void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, char*filepath){
+    FILE* file = fopen(filepath, "ab"); // nao sobrescreve. Caso o usuario queira adicionar mais musicas.
+    fwrite(playlist, sizeof(playlist), 1, file);
+    fclose(file);
 }
 
 tPlaylist* Adiciona_MusicaPlaylist(int indice, tPlaylist* p_Playlist, tMusica** pp_Musica, tArtista **pp_Artistas){

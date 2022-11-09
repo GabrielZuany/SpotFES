@@ -1,7 +1,5 @@
-1. Rever código impedindo erros do usuário e procurando bugs.
-
-2. Revisar o código.
+1. Revisar o código.
 
 3. Makefile correto.
 
-4. Armazenar a playlist (arquivo binário ) e usa-la dps.
+4. Carregar as playlists dos arquivos binários (gravação já feita).

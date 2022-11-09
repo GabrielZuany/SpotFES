@@ -18,9 +18,7 @@ void ExibeMenu(){
 
 tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_Artistas,tPlaylist **pp_ListaPlaylist, FILE *RelatorioMusica, FILE *RelatorioArtista){
     static int qtdPlaylist = 0;
-    int indiceDaPlaylist = 0;
-    int indiceDaMusica = 0;
-    int qtd_MusicaParaRecomendar = 0;
+    int indiceDaPlaylist = 0, indiceDaMusica = 0, qtd_MusicaParaRecomendar = 0;
 
     switch (opcao){
     case Sair:
@@ -37,14 +35,22 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
 
     case Criar_Uma_Playlist:
         pp_ListaPlaylist = (tPlaylist** )realloc(pp_ListaPlaylist, (qtdPlaylist+1) * sizeof(tPlaylist*));
+
         printf("Nome da playlist: ");
-        char nome[50] = "";
+        char nome[50] = "", *filepath;
+        
         Reseta_Str(nome);
         scanf("%[^\n]%*c", nome);
         pp_ListaPlaylist[qtdPlaylist] = Inicializa_PonteiroDePlaylist(nome, qtdPlaylist);
+
+        filepath = Cria_ArquivoPlaylist_RetornandoCaminho(nome); // arquivos binários.
+        Armazena_Playlist_em_ArquivoBinario(pp_ListaPlaylist[qtdPlaylist], filepath);
+
         qtdPlaylist++;
         Acesso_QuantidadePlaylists(qtdPlaylist, VERDADE);
         printf("Playlist criada com sucesso!\n");
+        
+        free(filepath);
         break;
 
     case Listar_Playlists:
