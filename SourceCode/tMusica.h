@@ -237,4 +237,5 @@ void LiberaTodasAsMusicas(tMusica** pp_musica);
  */
 void LiberaMusica(tMusica* musica);
 
+
 #endif

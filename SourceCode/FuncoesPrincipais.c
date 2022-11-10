@@ -22,7 +22,7 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
 
     switch (opcao){
     case Sair:
-        /* sair */
+        //Registra_Playlists_ArqBinario(pp_ListaPlaylist);
         break;
         
     case Buscar_Musica:
@@ -37,20 +37,16 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
         pp_ListaPlaylist = (tPlaylist** )realloc(pp_ListaPlaylist, (qtdPlaylist+1) * sizeof(tPlaylist*));
 
         printf("Nome da playlist: ");
-        char nome[50] = "", *filepath;
+        char nome[50] = "";
         
         Reseta_Str(nome);
         scanf("%[^\n]%*c", nome);
         pp_ListaPlaylist[qtdPlaylist] = Inicializa_PonteiroDePlaylist(nome, qtdPlaylist);
 
-        filepath = Cria_ArquivoPlaylist_RetornandoCaminho(nome); // arquivos binários.
-        Armazena_Playlist_em_ArquivoBinario(pp_ListaPlaylist[qtdPlaylist], filepath);
-
         qtdPlaylist++;
         Acesso_QuantidadePlaylists(qtdPlaylist, VERDADE);
         printf("Playlist criada com sucesso!\n");
         
-        free(filepath);
         break;
 
     case Listar_Playlists:

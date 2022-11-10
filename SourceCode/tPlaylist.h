@@ -48,7 +48,7 @@ void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, char*filepath);
  */
 void LiberaTodasAsPlaylist(tPlaylist** pp_playlist);
 
-
+void Registra_Playlists_ArqBinario(tPlaylist** pp_ListaPlaylist);
 
 //============================= aux ==================
 

@@ -27,7 +27,7 @@ tPlaylist* Inicializa_PonteiroDePlaylist(char nome[], int indice){
 }
 
 char* Cria_ArquivoPlaylist_RetornandoCaminho(char nome[]){
-    char* path = calloc(sizeof(char), 70);
+    char* path = calloc(sizeof(char), 90);
     char* command = calloc(sizeof(char), 70);
 
     strcat(command, "mkdir ");
@@ -41,7 +41,7 @@ char* Cria_ArquivoPlaylist_RetornandoCaminho(char nome[]){
     strcat(command, "touch ");
     strcat(path, "../Playlists/");
     strcat(path, nome);
-    strcat(path, ".bat");
+    strcat(path, ".bin");
     strcat(command, path);
     
     system(command);
@@ -49,9 +49,48 @@ char* Cria_ArquivoPlaylist_RetornandoCaminho(char nome[]){
     return path;
 }
 
+void Registra_Playlists_ArqBinario(tPlaylist** pp_ListaPlaylist){
+    int qtd_playlists = Acesso_QuantidadePlaylists(0, FALSO);
+    char nome[50];
+    char *path = NULL;
+    int i;
+    
+    for(i=0; i<qtd_playlists; i++){
+        strcpy(nome, pp_ListaPlaylist[i]->nome);
+        path = Cria_ArquivoPlaylist_RetornandoCaminho(nome);
+        Armazena_Playlist_em_ArquivoBinario(pp_ListaPlaylist[i], path);
+        free(path);
+    }
+}
+
 void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, char*filepath){
-    FILE* file = fopen(filepath, "ab"); // nao sobrescreve. Caso o usuario queira adicionar mais musicas.
-    fwrite(playlist, sizeof(playlist), 1, file);
+
+    // --------- tentando armazenar --------
+    FILE* file = fopen(filepath, "wb");
+    int quantidade_musica_na_playlist = playlist->qtdMusica;
+
+    fwrite(&(playlist->indice), sizeof(int), 1, file);
+    fwrite(&(playlist->qtdMusica), sizeof(int), 1, file);
+    fwrite((playlist->nome), sizeof(char), strlen(playlist->nome), file);
+    fclose(file);
+
+
+    //-------------------- tentando ler ----------------
+    file = fopen(filepath, "rb");
+    int indice, qtdMusica;
+    char nome[50] = "";
+    Reseta_String(nome);
+
+    fread(&indice, sizeof(int), 1, file);
+    fread(&qtdMusica, sizeof(int), 1, file);
+    fread(nome, sizeof(char), strlen(playlist->nome), file); // tamanho maximo do nome = 50
+    //fread(nome, sizeof(char), 50, file); // tamanho maximo do nome = 50
+
+    printf("REGISTRANDO E RESGATANDO BINARIO\n");
+    printf("======= INDICE %d ==========\n", indice);
+    printf("======= QTD musica: %d =====\n", qtdMusica);
+    printf("======= Nome: %s ====\n", nome);
+    
     fclose(file);
 }
 
