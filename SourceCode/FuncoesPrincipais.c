@@ -17,7 +17,7 @@ void ExibeMenu(){
 }
 
 tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_Artistas,tPlaylist **pp_ListaPlaylist, FILE *RelatorioMusica, FILE *RelatorioArtista){
-    static int qtdPlaylist = 0;
+    int qtdPlaylist = Acesso_QuantidadePlaylists(0, FALSO);
     int indiceDaPlaylist = 0, indiceDaMusica = 0, qtd_MusicaParaRecomendar = 0;
 
     switch (opcao){
@@ -43,8 +43,7 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
         scanf("%[^\n]%*c", nome);
         pp_ListaPlaylist[qtdPlaylist] = Inicializa_PonteiroDePlaylist(nome, qtdPlaylist);
 
-        qtdPlaylist++;
-        Acesso_QuantidadePlaylists(qtdPlaylist, VERDADE);
+        Acesso_QuantidadePlaylists(qtdPlaylist+1, VERDADE);
         printf("Playlist criada com sucesso!\n");
         
         break;
@@ -169,3 +168,8 @@ FILE* AbreArquivoTracksCSV(char *argv[]){
     }
     return tracks_file;
 }
+
+
+//===========novo
+
+

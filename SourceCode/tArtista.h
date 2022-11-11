@@ -109,4 +109,6 @@ void LiberaTodosOsArtistas(tArtista** pp_Artistas);
  */
 void LiberaArtista(tArtista *pArtista);
 
+
+
 #endif

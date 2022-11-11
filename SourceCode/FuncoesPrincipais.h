@@ -56,8 +56,6 @@ void ListarMusica(tMusica** pp_Musicas);
  * @param str string a ser resetada.
  */
 void Reseta_Str(char* str);
-
-
-
+//=============novo=======================
 
 #endif

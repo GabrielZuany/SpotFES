@@ -366,3 +366,12 @@ void LiberaMusica(tMusica* musica){
     free(musica->artistas);
     free(musica->id_artistas);
 }
+
+
+tMusica* Acesso_MusicaDeIndiceX(tMusica** pp_Musicas , int indiceMusica){
+    return pp_Musicas[indiceMusica];
+}
+
+int Acesso_IndiceNoArrayMusicaX(tMusica** pp_Musicas , int indice){
+    return pp_Musicas[indice]->posicaoNoArray;
+}

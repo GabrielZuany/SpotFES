@@ -1,6 +1,7 @@
 #include "tPlaylist.h"
 #define QTD_PROPRIEDADES_ANALISE 8
 #define FALSO 0
+#define VERDADE 1
 struct tPlaylist{
     int indice;
     char nome[50];
@@ -26,74 +27,109 @@ tPlaylist* Inicializa_PonteiroDePlaylist(char nome[], int indice){
     return p_Playlist;
 }
 
-char* Cria_ArquivoPlaylist_RetornandoCaminho(char nome[]){
-    char* path = calloc(sizeof(char), 90);
-    char* command = calloc(sizeof(char), 70);
 
-    strcat(command, "mkdir ");
-    strcat(path, "../Playlists/");
-    strcat(command, path);
-    system(command);
-
-    free(command);// resetar o ponteiro.
-    command = calloc(sizeof(char), 70);
-
-    strcat(command, "touch ");
-    strcat(path, "../Playlists/");
-    strcat(path, nome);
-    strcat(path, ".bin");
-    strcat(command, path);
+//============================binario====================
+//======REGISTRO
+void Registra_Playlists_ArqBinario(tPlaylist** pp_ListaPlaylist, FILE *file){
+    int Qtd_Playlists;
+    Qtd_Playlists = Acesso_QuantidadePlaylists(0, FALSO);
+    int i = 0;
     
-    system(command);
-    free(command);
-    return path;
-}
-
-void Registra_Playlists_ArqBinario(tPlaylist** pp_ListaPlaylist){
-    int qtd_playlists = Acesso_QuantidadePlaylists(0, FALSO);
-    char nome[50];
-    char *path = NULL;
-    int i;
+    fwrite(&Qtd_Playlists, sizeof(int), 1, file);
+    printf("registro\n%d\n", Qtd_Playlists);
     
-    for(i=0; i<qtd_playlists; i++){
-        strcpy(nome, pp_ListaPlaylist[i]->nome);
-        path = Cria_ArquivoPlaylist_RetornandoCaminho(nome);
-        Armazena_Playlist_em_ArquivoBinario(pp_ListaPlaylist[i], path);
-        free(path);
+    for(i=0; i < Qtd_Playlists; i++){
+        Armazena_Playlist_em_ArquivoBinario(pp_ListaPlaylist[i], file);
+        printf("\n");
     }
 }
 
-void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, char*filepath){
 
-    // --------- tentando armazenar --------
-    FILE* file = fopen(filepath, "wb");
-    int quantidade_musica_na_playlist = playlist->qtdMusica;
-
+void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, FILE* file){
+    int tamanhoNome = 0;
+    //indice
     fwrite(&(playlist->indice), sizeof(int), 1, file);
+    printf("%d ", playlist->indice);
+    //qtd musica
     fwrite(&(playlist->qtdMusica), sizeof(int), 1, file);
-    fwrite((playlist->nome), sizeof(char), strlen(playlist->nome), file);
-    fclose(file);
+    printf("%d ", playlist->qtdMusica);
+    //tamahno nome
+    tamanhoNome = strlen(playlist->nome);
+    fwrite(&tamanhoNome, sizeof(int), 1, file);
+    printf("%d ", tamanhoNome);
+    //nome
+    fputs(playlist->nome, file);
+    printf("%s ", playlist->nome);
 
+    int i = 0, indice = 0; 
 
-    //-------------------- tentando ler ----------------
-    file = fopen(filepath, "rb");
-    int indice, qtdMusica;
-    char nome[50] = "";
-    Reseta_String(nome);
-
-    fread(&indice, sizeof(int), 1, file);
-    fread(&qtdMusica, sizeof(int), 1, file);
-    fread(nome, sizeof(char), strlen(playlist->nome), file); // tamanho maximo do nome = 50
-    //fread(nome, sizeof(char), 50, file); // tamanho maximo do nome = 50
-
-    printf("REGISTRANDO E RESGATANDO BINARIO\n");
-    printf("======= INDICE %d ==========\n", indice);
-    printf("======= QTD musica: %d =====\n", qtdMusica);
-    printf("======= Nome: %s ====\n", nome);
-    
-    fclose(file);
+    for(i = 0; i < (playlist->qtdMusica); i++){
+        indice = Acesso_IndiceNoArrayMusicaX(playlist->Lista_musicas, i);
+        fwrite(&indice, sizeof(int), 1, file);
+        printf("%d ", indice);
+    }
 }
 
+
+
+//=======LEITURA
+tPlaylist** Le_Playlists_ArqBinario(tPlaylist **pp_ListaPlaylist, tMusica **pp_Musicas, FILE * file){
+    int qtdPlaylist = 1, i = 0, indice, qtdMusica, i2 = 0, tamanhoNome;
+    char nome[50];
+    int *indiceMusica = NULL;
+    printf("Leitura:\n");
+
+    fread(&qtdPlaylist, sizeof(int), 1, file);
+    printf("qtd playlist: %d\n", qtdPlaylist);
+    Acesso_QuantidadePlaylists(qtdPlaylist, VERDADE);
+
+    pp_ListaPlaylist = (tPlaylist**)realloc(pp_ListaPlaylist, sizeof(tPlaylist*) * (qtdPlaylist+1));
+    
+    for(i = 0; i < qtdPlaylist ;i++){
+        //indice
+        fread(&indice, sizeof(int), 1, file);
+        printf("%d ", indice);
+        //qtd musica
+        fread(&qtdMusica, sizeof(int), 1, file);
+        printf("%d ", qtdMusica);
+        //tamanho nome
+        fread(&tamanhoNome, sizeof(int), 1, file);
+        printf("%d ", tamanhoNome);
+        //nome
+        //fgets(nome, tamanhoNome+1, file);
+        fread(nome, sizeof(char), tamanhoNome, file);
+        printf("%s ", nome);
+        //indices
+        indiceMusica = malloc(sizeof(int) * qtdMusica);
+        fread(indiceMusica, sizeof(int), qtdMusica, file);
+        for(i2 = 0; i2 < qtdMusica; i2++){
+            printf("%d ", indiceMusica[i2]);
+        }
+
+        // PARAMOS AQUI, ESTAMOS LENDO CERTO, SO FALTA ARMAZENAR
+
+        /*
+        pPlaylist->Lista_musicas = malloc(sizeof(tMusica*) * qtdMusica);
+        for(i = 0; i < qtd_musica; i++){
+            pPlaylist->Lista_musicas[i] = Acesso_MusicaDeIndiceX(pp_Musicas ,indiceMusica[i]);
+        }
+        */
+        printf("\n");
+    }
+    
+    return pp_ListaPlaylist;
+}
+
+
+
+
+
+
+
+
+
+
+// ================fim binario====================
 tPlaylist* Adiciona_MusicaPlaylist(int indice, tPlaylist* p_Playlist, tMusica** pp_Musica, tArtista **pp_Artistas){
     int posicao = p_Playlist->qtdMusica;
     p_Playlist->Lista_musicas[posicao] = pp_Musica[indice];

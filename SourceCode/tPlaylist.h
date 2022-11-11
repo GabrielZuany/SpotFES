@@ -28,27 +28,17 @@ tPlaylist* Inicializa_PonteiroDePlaylist(char nome[], int indice);
  */
 tPlaylist* Realoca_Memoria_PonteiroDeMusica(tPlaylist* p_Playlist);
 
-/**
- * @brief Cria pasta e arquivos binários que armazenam o conteúdo de cada playlist retornando um ponteiro para o caminho desse arquivo.
- * @param nome nome da playlist para criar o .bat
- * @return char* caminho do arquivo criado.
- */
-char* Cria_ArquivoPlaylist_RetornandoCaminho(char nome[]);
 
-/**
- * @brief Escreve no arquivo criado pela Cria_ArquivoPlaylist_RetornandoCaminho() o conteúdo registrado na playlist.
- * @param playlist playlist a ser gravada.
- * @param filepath caminho do arquivo.
- */
-void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, char*filepath);
+tPlaylist *LeUmaPlaylistBinario(FILE *file, tMusica** pp_musicas);
 
-/**
- * @brief Libera memoria alocada para todas as playlists.
- * @param pp_playlist ponteiro de ponteiro: vetor de structs.
- */
+tPlaylist** Le_Playlists_ArqBinario(tPlaylist **pp_ListaPlaylist, tMusica **pp_Musicas, FILE * file);
+
+void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, FILE* file);
+
+
 void LiberaTodasAsPlaylist(tPlaylist** pp_playlist);
 
-void Registra_Playlists_ArqBinario(tPlaylist** pp_ListaPlaylist);
+void Registra_Playlists_ArqBinario(tPlaylist** pp_ListaPlaylist, FILE *file);
 
 //============================= aux ==================
 

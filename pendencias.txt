@@ -1,5 +1,5 @@
 1. Revisar o código.
 
-3. Makefile correto.
+2. Makefile correto.
 
-4. Carregar as playlists dos arquivos binários (gravação já feita).
+3. Carregar as playlists dos arquivos binários para a struct.
