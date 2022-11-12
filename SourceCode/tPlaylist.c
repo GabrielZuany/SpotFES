@@ -67,9 +67,8 @@ void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, FILE* file){
 
 //=======LEITURA
 tPlaylist** Le_Playlists_ArqBinario(tPlaylist **pp_ListaPlaylist, tMusica **pp_Musicas, tArtista **pp_Artistas, FILE * file){
-    int qtdPlaylist = 0, indiceDaPlaylist = 0, indice = 0, qtdMusica, i2 = 0, tamanhoNome = 0, indiceDaMusica = 0, indiceResetaStg = 0;
+    int indiceDaPlaylist = 0, indice = 0, qtdMusica = 0, tamanhoNome = 0, indiceDaMusica = 0, indiceResetaStg = 0;
     char nome[50];
-    int *indiceMusica = NULL;
     for(indiceDaPlaylist = 0; indiceDaPlaylist < Acesso_QuantidadePlaylists(0, FALSO);indiceDaPlaylist++){
         int *indiceMusica = NULL;
         pp_ListaPlaylist[indiceDaPlaylist] = (tPlaylist*) malloc(sizeof(struct tPlaylist));
@@ -159,7 +158,7 @@ void RecomendaMusicasParecidasComUmaPlaylist(tPlaylist* pPlaylist, tMusica **pp_
 }
 
 float* CalculaArrayPropriedadesMusicaIdeal(tPlaylist *pPlaylist){
-    int iMusicas = 0, iPropriedades, j = 0, qtd_musicas = pPlaylist->qtdMusica;
+    int iMusicas = 0, iPropriedades, qtd_musicas = pPlaylist->qtdMusica;
     float *p_PropriedadesMusicaIdeal = (float*)malloc(sizeof(float)*QTD_PROPRIEDADES_ANALISE);
     float mediaPropriedades = 0;
     
@@ -175,6 +174,7 @@ float* CalculaArrayPropriedadesMusicaIdeal(tPlaylist *pPlaylist){
     }
     return p_PropriedadesMusicaIdeal;
 }
+
 
 //========================Impressao========================
 

@@ -7,7 +7,6 @@
 #include <string.h>
 #include <math.h>
 
-
 typedef struct tMusica tMusica;
 
 
@@ -52,6 +51,8 @@ tMusica* Inicializa_PonteiroDeMusica(char id_musica[], char nome[], int populari
  * @return tArtista** array de artistas da musica com todas as informações indexadas.
  */
 tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas);
+
+
 //======================================aux==========================================
 /**
  * @brief Retorna um ponteiro com str do nome.
@@ -175,6 +176,13 @@ double Calcula_DistanciaEuclidiana(float* propriedades_MusicaAtual, float* p_Pro
  */
 float AcessoProPriedadeXDaMusica(tMusica* pMusica, int indicePropriedade);
 
+/**
+ * @brief Retorna posicao da musica no array de musicas. 
+ * @param pp_Musicas array de musicas.
+ * @param indice pp_musicas[indice]
+ * @return int valor da variavel correspodente à posicao no array.
+ */
+int Acesso_IndiceNoArrayMusicaX(tMusica** pp_Musicas , int indice);
 
 
 //====================================impressao======================================
@@ -236,8 +244,5 @@ void LiberaTodasAsMusicas(tMusica** pp_musica);
  * @param musica ponteiro de musica
  */
 void LiberaMusica(tMusica* musica);
-
-
-int Acesso_IndiceNoArrayMusicaX(tMusica** pp_Musicas , int indice);
 
 #endif

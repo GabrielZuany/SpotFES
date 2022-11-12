@@ -63,9 +63,7 @@ tArtista** Le_Artistas(FILE* artista_file, tArtista** pp_Artistas){
         i++;
         Reseta_NomeGenero(nome, todos_generos);
     }
-
-    int aux = 0;
-    aux = Acesso_QuantidadeArtistas(i, VERDADE); // guarda a quantidade de artistas na funcao p/ retornar depois.
+    Acesso_QuantidadeArtistas(i, VERDADE); // guarda a quantidade de artistas na funcao p/ retornar depois.
     
     return pp_Artistas;
 }

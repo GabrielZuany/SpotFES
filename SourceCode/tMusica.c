@@ -58,8 +58,6 @@ tMusica* Inicializa_PonteiroDeMusica(char id_musica[], char nome[], int populari
 tMusica** Le_Musicas(FILE* tracks_file, tMusica** pp_Musicas, tArtista** pp_Artistas){
     tMusica* p_Musica = NULL;
     int i = 0;
-    tArtista **artistas;
- 
     //primeiro scanf
     char idMusica[25], nomeMusica[1000], nomeArtistas[10000], idArtistas_AGRUPADO[10000], dataDeLancamento[11];
     int popularidade = 0, tempo_ms = 0, explicit = 0; 
@@ -93,7 +91,7 @@ void Reseta_Informacoes(char* nomeMusica, char* idMusica, char* dataDeLancamento
     int i = 0, j = 0, k = 0, l = 0;
     int len_nome = strlen(nomeMusica), len_idMusica = strlen(idMusica), len_dataDeLancamento = strlen(dataDeLancamento), len_idAgrupado = strlen(idAgrupado);
 
-    for(; i<len_nome, j<len_dataDeLancamento, k<len_idMusica, l<len_idAgrupado; i++, j++, k++, l++){
+    for(; i<len_nome || j<len_dataDeLancamento || k<len_idMusica || l<len_idAgrupado; i++, j++, k++, l++){
         nomeMusica[i] = '\0';
         dataDeLancamento[j] = '\0';
         idMusica[k] = '\0';
@@ -101,6 +99,7 @@ void Reseta_Informacoes(char* nomeMusica, char* idMusica, char* dataDeLancamento
     }
 }
  
+
 tArtista** Registra_ArtistasDaMusica(tMusica* p_Musica, tArtista** pp_Artistas){
     tArtista** artistas_da_musica = (tArtista**)malloc(sizeof(tArtista*));
 
@@ -176,7 +175,7 @@ float AcessoProPriedadeXDaMusica(tMusica* pMusica, int indicePropriedade){
 }
 
 void ImprimeXMusicasMaisProximas(tMusica **pp_Musicas, float *p_PropriedadesMusicaIdeal, int qtd_MelhoresMusicas){
-    int iMusicas = 0, iPropriedades = 0, posicao = 1, indiceAtualMelhores = 0, aux_encerrarLoop = 0;
+    int iMusicas = 0, iPropriedades = 0, posicao = 1, indiceAtualMelhores = 0;
     int qtd_Musicas = Acesso_QuantidadeMusicas(0, FALSO);
     float propriedades_MusicaAtual[QTD_PROPRIEDADES_ANALISE];
     double DistanciaEuclidianaDeTodasAsMusicas[qtd_Musicas];
@@ -223,7 +222,7 @@ int MenorEntreAeB(double distanciaEuclidiana[], int a, int qtd_Musicas){
     int indiceMenor = a;
     double menor = distanciaEuclidiana[a];
     a++;
-    for(a; a < qtd_Musicas; a++){
+    for(; a < qtd_Musicas; a++){
         if (distanciaEuclidiana[a] < menor){
             menor = distanciaEuclidiana[a];
             indiceMenor = a;
@@ -233,7 +232,7 @@ int MenorEntreAeB(double distanciaEuclidiana[], int a, int qtd_Musicas){
 }
 
 void OrdenaVetorDouble(double* distanciaEuclidiana, int qtd_Musicas){
-    int i = 0, j, indiceMenor = 0; 
+    int i = 0, indiceMenor = 0; 
     double aux = 0;
 
     for(i = 0; i < qtd_Musicas; i++){
@@ -348,6 +347,10 @@ int MaiorNumeroDePresencas_Musicas(tMusica** pp_Musicas){
     return MaiorQtdPresenca;
 }
 
+int Acesso_IndiceNoArrayMusicaX(tMusica** pp_Musicas , int indice){
+    return pp_Musicas[indice]->posicaoNoArray;
+}
+
 
 //======================== Liberação de memória ===========================
 
@@ -368,6 +371,4 @@ void LiberaMusica(tMusica* musica){
     free(musica->id_artistas);
 }
 
-int Acesso_IndiceNoArrayMusicaX(tMusica** pp_Musicas , int indice){
-    return pp_Musicas[indice]->posicaoNoArray;
-}
+

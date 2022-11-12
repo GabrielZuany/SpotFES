@@ -1,4 +1,5 @@
 #include "FuncoesPrincipais.h"
+
 #define Sair 0
 #define Buscar_Musica 1
 #define Listar_Uma_Musica 2
@@ -9,6 +10,21 @@
 #define Recomendar_Musicas_Parecidas_Com_Uma_Playlist 7
 #define Gerar_Relatorio 8
 
+
+//=========== system ============
+void SystemCreateFoldersCommands(){
+    system("mkdir ../Relatorio");
+    system("touch ../Relatorio/Musica.txt");
+    system("touch ../Relatorio/Artista.txt");
+    system("mkdir ../Playlists");
+}
+
+void CloseFiles(FILE* arq1, FILE* arq2, FILE* arq3, FILE* arq4){
+    fclose(arq1);
+    fclose(arq2);
+    fclose(arq3);
+    fclose(arq4);
+}
 
 // --------- Interatividade com o Usuário ----------
 
@@ -22,7 +38,6 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
 
     switch (opcao){
     case Sair:
-        //Registra_Playlists_ArqBinario(pp_ListaPlaylist);
         break;
         
     case Buscar_Musica:
@@ -56,6 +71,7 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
         printf("Indice da playlist: ");
         scanf("%d%*c", &indiceDaPlaylist);
 
+        // Validar entradas:
         valorValido = 1;
         if (indiceDaPlaylist < 0 || indiceDaPlaylist >= Acesso_QuantidadePlaylists(0, FALSO)){
             valorValido = 0;
@@ -72,6 +88,8 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
         break;
 
     case Adicionar_Uma_Musica_Na_Playlist: 
+    
+        // Validar entradas:
         printf("Indice da playlist: ");
         scanf("%d%*c", &indiceDaPlaylist);
         valorValido = 1;
@@ -85,10 +103,10 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
                 valorValido = 1;
             }
         }
-    
+
+        // Validar entradas:
         printf("Indice da musica: ");
         scanf("%d%*c", &indiceDaMusica);
-
         while(indiceDaMusica > Acesso_QuantidadeMusicas(0, FALSO)-1 || indiceDaMusica < 0){
             printf("Nao existe musica com este indice! Indice da musica: ");
             scanf("%d", &indiceDaMusica);
@@ -205,20 +223,4 @@ FILE* AbreArquivoTracksCSV(char *argv[]){
         exit(EXIT_FAILURE);
     }
     return tracks_file;
-}
-
-
-//=========== system ============
-void SystemCreateFoldersCommands(){
-    system("mkdir ../Relatorio");
-    system("touch ../Relatorio/Musica.txt");
-    system("touch ../Relatorio/Artista.txt");
-    system("mkdir ../Playlists");
-}
-
-void CloseFiles(FILE* arq1, FILE* arq2, FILE* arq3, FILE* arq4){
-    fclose(arq1);
-    fclose(arq2);
-    fclose(arq3);
-    fclose(arq4);
 }

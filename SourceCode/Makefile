@@ -1,17 +1,22 @@
-all: main
+CC=gcc
+CFLAGS=-lm -Wall
 
-CC = gcc
-override CFLAGS += -lm -g -Wno-everything -pthread 
+DEPS= FuncoesPrincipais.h tArtista.h tMusica.h tPlaylist.h tPropriedades.h
 
-SRCS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.c' -print)
-HEADERS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.h' -print)
+OBJ=FuncoesPrincipais.o tArtista.o tMusica.o tPlaylist.o tPropriedades.o main.o
 
-main: $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) $(SRCS) -o "../Objects/$@" -lm
-	
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
-main-debug: $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) -O0 $(SRCS) -o "../Objects/$@" -lm
+prog: $(OBJ)
+	$(CC) -o $@ $^ $(CFLAGS)
+	echo "Compilado!"
 
 clean:
-	rm -f main main-debug
+	rm -rf *.o prog
+
+run:
+	./prog
+
+objFolder:
+    @ mkdir -p objects

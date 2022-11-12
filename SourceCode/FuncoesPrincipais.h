@@ -10,6 +10,20 @@
 #define FALSO 0
 
 /**
+ * @brief Cria diretorios ao iniciar o programa.
+ */
+void SystemCreateFoldersCommands();
+
+/**
+ * @brief Fecha arquivos.
+ * @param arq1 
+ * @param arq2 
+ * @param arq3 
+ * @param arq4 
+ */
+void CloseFiles(FILE* arq1, FILE* arq2, FILE* arq3, FILE* arq4);
+
+/**
  * @brief Abre o arquivo de artistas para leitura e armazenamento nas structs.
  * @param argc entradas do terminal referentes ao caminho do arquivo.
  * @param argv entradas do terminal referentes ao caminho do arquivo.
@@ -35,6 +49,8 @@ void ExibeMenu();
  * @param opcao opção desejada (int).
  * @param pp_Musicas Base de dados de musicas.
  * @param pp_ListaPlaylist array de tipos tPlaylist.
+ * @param RelatorioMusica arquivo para escrita de musicas.
+ * @param RelatorioArtista arquivo para escrita de artistas.
  * @return tPlaylist** Playlists atualizadas.
  */
 tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_Artistas, tPlaylist **pp_ListaPlaylist, FILE *RelatorioMusica, FILE *RelatorioArtista);
@@ -56,9 +72,5 @@ void ListarMusica(tMusica** pp_Musicas);
  * @param str string a ser resetada.
  */
 void Reseta_Str(char* str);
-//=============novo=======================
-
-void SystemCreateFoldersCommands();
-void CloseFiles(FILE* arq1, FILE* arq2, FILE* arq3, FILE* arq4);
 
 #endif

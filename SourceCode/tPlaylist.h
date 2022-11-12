@@ -5,6 +5,47 @@
 
 typedef struct tPlaylist tPlaylist;
 
+// ========================== Arquivos Binários ======================
+
+/**
+ * @brief Le uma única playlist do arquivo binario.
+ * @param file arquivo a ser lido.
+ * @param pp_musicas base de músicas.
+ * @return tPlaylist* playlist escrita (carregada).
+ */
+tPlaylist *LeUmaPlaylistBinario(FILE *file, tMusica** pp_musicas);
+
+/**
+ * @brief Le todas as playlists registradas no arquivo binario para iniciarlizar o programa carregando as playlists salvas previamente.
+ * @param pp_ListaPlaylist ponteiro de ponteiro que irá conter as playlists cadastradas.
+ * @param pp_Musicas base de musicas.
+ * @param pp_Artistas base de artistas.
+ * @param file arquivo que será lido.
+ * @return tPlaylist** vetor de structs com cada playlist em uma posição do vetor.
+ */
+tPlaylist** Le_Playlists_ArqBinario(tPlaylist **pp_ListaPlaylist, tMusica **pp_Musicas,tArtista **pp_Artistas, FILE * file);
+
+/**
+ * @brief Le a quantidade de playlists cadastradas no arquivo binario para alocar a memoria dinamicamente de acordo com a necessiade.
+ * @param file arquivo a ser lido.
+ */
+void Le_Quantidade_Playlists_ArqBinario(FILE* file);
+
+/**
+ * @brief Escreve uma única playlist no arquivo binário.
+ * @param playlist playlist a ser escrita.
+ * @param file arquivo que será escrito.
+ */
+void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, FILE* file);
+
+/**
+ * @brief Escreve todas as playlists cadastradas no arquivo binário.
+ * @param pp_ListaPlaylist vetor de playlists.
+ * @param file arquivo para a escrita.
+ */
+void Registra_Playlists_ArqBinario(tPlaylist** pp_ListaPlaylist, FILE *file);
+
+
 
 //============================= Alocação de Memória ==================
 /**
@@ -28,18 +69,12 @@ tPlaylist* Inicializa_PonteiroDePlaylist(char nome[], int indice);
  */
 tPlaylist* Realoca_Memoria_PonteiroDeMusica(tPlaylist* p_Playlist);
 
-
-tPlaylist *LeUmaPlaylistBinario(FILE *file, tMusica** pp_musicas);
-
-tPlaylist** Le_Playlists_ArqBinario(tPlaylist **pp_ListaPlaylist, tMusica **pp_Musicas,tArtista **pp_Artistas, FILE * file);
-
-void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, FILE* file);
-
-void Le_Quantidade_Playlists_ArqBinario(FILE* file);
-
+/**
+ * @brief Libera memoria alocada para o ponteiro duplo.
+ * @param pp_playlist 
+ */
 void LiberaTodasAsPlaylist(tPlaylist** pp_playlist);
 
-void Registra_Playlists_ArqBinario(tPlaylist** pp_ListaPlaylist, FILE *file);
 
 //============================= aux ==================
 

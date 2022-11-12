@@ -4,7 +4,6 @@
 #define VERDADE 1
 
 int main(int argc, char *argv[]){
-    
     // abertura de arquivos
     FILE* artista_file = AbreArquivoArtistasCSV(argc, argv);
     FILE* tracks_file = AbreArquivoTracksCSV(argv);
@@ -13,6 +12,7 @@ int main(int argc, char *argv[]){
     
     FILE* RelatorioMusica = fopen("../Relatorio/Musica.txt", "w");
     FILE* RelatorioArtista = fopen("../Relatorio/Artista.txt", "w"); 
+
 
     // inicializacao de ponteiros
     tArtista **pp_Artistas = NULL;
@@ -35,8 +35,8 @@ int main(int argc, char *argv[]){
         Le_Quantidade_Playlists_ArqBinario(fPlaylists_Cadastradas);
         pp_ListaPlaylist = Inicializa_PonteiroDePonteiroDePlaylist(Acesso_QuantidadePlaylists(0, FALSO));
         pp_ListaPlaylist = Le_Playlists_ArqBinario(pp_ListaPlaylist, pp_Musicas, pp_Artistas, fPlaylists_Cadastradas);
+        fclose(fPlaylists_Cadastradas);
     }
-    fclose(fPlaylists_Cadastradas);
 
     int opcao = 0;    
     do{
