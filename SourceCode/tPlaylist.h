@@ -11,7 +11,7 @@ typedef struct tPlaylist tPlaylist;
  * @brief Aloca memoria para o ponteiro de ponteiro (lista de artistas do tipo tArtistas). 
  * @return tPlaylist** array de ponteiros de artista
  */
-tPlaylist** Inicializa_PonteiroDePonteiroDePlaylist();
+tPlaylist** Inicializa_PonteiroDePonteiroDePlaylist(int x);
 
 /**
  * @brief aloca memoria para um unico ponteiro de artista
@@ -31,10 +31,11 @@ tPlaylist* Realoca_Memoria_PonteiroDeMusica(tPlaylist* p_Playlist);
 
 tPlaylist *LeUmaPlaylistBinario(FILE *file, tMusica** pp_musicas);
 
-tPlaylist** Le_Playlists_ArqBinario(tPlaylist **pp_ListaPlaylist, tMusica **pp_Musicas, FILE * file);
+tPlaylist** Le_Playlists_ArqBinario(tPlaylist **pp_ListaPlaylist, tMusica **pp_Musicas,tArtista **pp_Artistas, FILE * file);
 
 void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, FILE* file);
 
+void Le_Quantidade_Playlists_ArqBinario(FILE* file);
 
 void LiberaTodasAsPlaylist(tPlaylist** pp_playlist);
 

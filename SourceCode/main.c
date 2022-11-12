@@ -1,28 +1,18 @@
 #include "FuncoesPrincipais.h"
-
+#include <math.h>
 #define FALSO 0
 #define VERDADE 1
 
 int main(int argc, char *argv[]){
-
+    
     // abertura de arquivos
     FILE* artista_file = AbreArquivoArtistasCSV(argc, argv);
     FILE* tracks_file = AbreArquivoTracksCSV(argv);
-
-    //Criar pasta com arquivos para relatorio.
-    system("mkdir ../Relatorio");
-    system("touch ../Relatorio/Musica.txt");
-    system("touch ../Relatorio/Artista.txt");
-    FILE* RelatorioMusica = fopen("../Relatorio/Musica.txt", "w");
-    FILE* RelatorioArtista = fopen("../Relatorio/Artista.txt", "w");
-    system("mkdir ../Playlists");
     
-    //Cria pasta com arquivo playlist
-    FILE* fPlaylists_Cadastradas = fopen("../Playlists/playlists_cadastradas.bin", "rb");
-    if(fPlaylists_Cadastradas == NULL){
-        system("touch ../Playlists/playlists_cadastradas.bin");
-        Acesso_QuantidadePlaylists(0, VERDADE);
-    }
+    SystemCreateFoldersCommands();
+    
+    FILE* RelatorioMusica = fopen("../Relatorio/Musica.txt", "w");
+    FILE* RelatorioArtista = fopen("../Relatorio/Artista.txt", "w"); 
 
     // inicializacao de ponteiros
     tArtista **pp_Artistas = NULL;
@@ -34,44 +24,37 @@ int main(int argc, char *argv[]){
     pp_Musicas = Le_Musicas(tracks_file, pp_Musicas, pp_Artistas);
 
     tPlaylist **pp_ListaPlaylist = NULL;
-    pp_ListaPlaylist = Inicializa_PonteiroDePonteiroDePlaylist();
+    FILE* fPlaylists_Cadastradas = fopen("../Playlists/playlists_cadastradas.bin", "rb");
 
-    //testando
-    if(fPlaylists_Cadastradas != NULL){
-        pp_ListaPlaylist = Le_Playlists_ArqBinario(pp_ListaPlaylist, pp_Musicas, fPlaylists_Cadastradas);
-        fclose(fPlaylists_Cadastradas);
+    if(fPlaylists_Cadastradas == NULL){
+        system("touch ../Playlists/playlists_cadastradas.bin");
+        Acesso_QuantidadePlaylists(0, VERDADE);
+        pp_ListaPlaylist = Inicializa_PonteiroDePonteiroDePlaylist(1);
     }
+    else{
+        Le_Quantidade_Playlists_ArqBinario(fPlaylists_Cadastradas);
+        pp_ListaPlaylist = Inicializa_PonteiroDePonteiroDePlaylist(Acesso_QuantidadePlaylists(0, FALSO));
+        pp_ListaPlaylist = Le_Playlists_ArqBinario(pp_ListaPlaylist, pp_Musicas, pp_Artistas, fPlaylists_Cadastradas);
+    }
+    fclose(fPlaylists_Cadastradas);
 
-    
-    
-    //main
-    int opcao = 0;
-
-
-    /*
-    printf("\n\n\n==============================================================================================\n");
+    int opcao = 0;    
     do{
-        //ExibeMenu();
+        ExibeMenu();
         scanf("%d",&opcao);
         scanf("%*c");
         pp_ListaPlaylist = ExecutaOpcaoUsuario(opcao, pp_Musicas, pp_Artistas, pp_ListaPlaylist, RelatorioMusica, RelatorioArtista);
     }while(opcao != 0);
-    printf("==============================================================================================\n\n\n");
     
     fPlaylists_Cadastradas = fopen("../Playlists/playlists_cadastradas.bin", "wb");
     Registra_Playlists_ArqBinario(pp_ListaPlaylist, fPlaylists_Cadastradas);
-    fclose(fPlaylists_Cadastradas);
-    LiberaTodasAsPlaylist(pp_ListaPlaylist);
-    */
-
-
+    
     LiberaTodosOsArtistas(pp_Artistas);
     LiberaTodasAsMusicas(pp_Musicas);
+    LiberaTodasAsPlaylist(pp_ListaPlaylist);
 
-    fclose(RelatorioMusica);
-    fclose(RelatorioArtista);
-    fclose(tracks_file);
-    fclose(artista_file);
+    fclose(fPlaylists_Cadastradas);
+    CloseFiles(RelatorioMusica, RelatorioArtista, tracks_file, artista_file);
     return 0;
 }
 

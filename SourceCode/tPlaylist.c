@@ -11,9 +11,9 @@ struct tPlaylist{
 
 
 //========================inicializacao de ponteiro========================
-tPlaylist** Inicializa_PonteiroDePonteiroDePlaylist(){
+tPlaylist** Inicializa_PonteiroDePonteiroDePlaylist(int x){
     tPlaylist  **pp_ListaPlaylist = NULL;
-    pp_ListaPlaylist = (tPlaylist**)malloc(sizeof(tPlaylist*)); 
+    pp_ListaPlaylist = (tPlaylist**)malloc(sizeof(tPlaylist*) * x); 
     return pp_ListaPlaylist;
 }
 
@@ -36,11 +36,9 @@ void Registra_Playlists_ArqBinario(tPlaylist** pp_ListaPlaylist, FILE *file){
     int i = 0;
     
     fwrite(&Qtd_Playlists, sizeof(int), 1, file);
-    printf("registro\n%d\n", Qtd_Playlists);
     
     for(i=0; i < Qtd_Playlists; i++){
         Armazena_Playlist_em_ArquivoBinario(pp_ListaPlaylist[i], file);
-        printf("\n");
     }
 }
 
@@ -49,84 +47,67 @@ void Armazena_Playlist_em_ArquivoBinario(tPlaylist* playlist, FILE* file){
     int tamanhoNome = 0;
     //indice
     fwrite(&(playlist->indice), sizeof(int), 1, file);
-    printf("%d ", playlist->indice);
     //qtd musica
     fwrite(&(playlist->qtdMusica), sizeof(int), 1, file);
-    printf("%d ", playlist->qtdMusica);
     //tamahno nome
     tamanhoNome = strlen(playlist->nome);
     fwrite(&tamanhoNome, sizeof(int), 1, file);
-    printf("%d ", tamanhoNome);
     //nome
     fputs(playlist->nome, file);
-    printf("%s ", playlist->nome);
-
     int i = 0, indice = 0; 
-
     for(i = 0; i < (playlist->qtdMusica); i++){
         indice = Acesso_IndiceNoArrayMusicaX(playlist->Lista_musicas, i);
         fwrite(&indice, sizeof(int), 1, file);
-        printf("%d ", indice);
     }
 }
 
 
 
+
+
 //=======LEITURA
-tPlaylist** Le_Playlists_ArqBinario(tPlaylist **pp_ListaPlaylist, tMusica **pp_Musicas, FILE * file){
-    int qtdPlaylist = 1, i = 0, indice, qtdMusica, i2 = 0, tamanhoNome;
+tPlaylist** Le_Playlists_ArqBinario(tPlaylist **pp_ListaPlaylist, tMusica **pp_Musicas, tArtista **pp_Artistas, FILE * file){
+    int qtdPlaylist = 0, indiceDaPlaylist = 0, indice = 0, qtdMusica, i2 = 0, tamanhoNome = 0, indiceDaMusica = 0, indiceResetaStg = 0;
     char nome[50];
     int *indiceMusica = NULL;
-    printf("Leitura:\n");
-
-    fread(&qtdPlaylist, sizeof(int), 1, file);
-    printf("qtd playlist: %d\n", qtdPlaylist);
-    Acesso_QuantidadePlaylists(qtdPlaylist, VERDADE);
-
-    pp_ListaPlaylist = (tPlaylist**)realloc(pp_ListaPlaylist, sizeof(tPlaylist*) * (qtdPlaylist+1));
-    
-    for(i = 0; i < qtdPlaylist ;i++){
+    for(indiceDaPlaylist = 0; indiceDaPlaylist < Acesso_QuantidadePlaylists(0, FALSO);indiceDaPlaylist++){
+        int *indiceMusica = NULL;
+        pp_ListaPlaylist[indiceDaPlaylist] = (tPlaylist*) malloc(sizeof(struct tPlaylist));
         //indice
         fread(&indice, sizeof(int), 1, file);
-        printf("%d ", indice);
         //qtd musica
         fread(&qtdMusica, sizeof(int), 1, file);
-        printf("%d ", qtdMusica);
         //tamanho nome
         fread(&tamanhoNome, sizeof(int), 1, file);
-        printf("%d ", tamanhoNome);
         //nome
-        //fgets(nome, tamanhoNome+1, file);
+        for(indiceResetaStg = 0; indiceResetaStg < 50; indiceResetaStg++){
+            nome[indiceResetaStg] = '\0';
+        }
         fread(nome, sizeof(char), tamanhoNome, file);
-        printf("%s ", nome);
-        //indices
+        //indicesMusica
         indiceMusica = malloc(sizeof(int) * qtdMusica);
-        fread(indiceMusica, sizeof(int), qtdMusica, file);
-        for(i2 = 0; i2 < qtdMusica; i2++){
-            printf("%d ", indiceMusica[i2]);
-        }
+        fread(indiceMusica, sizeof(int), qtdMusica, file); 
 
-        // PARAMOS AQUI, ESTAMOS LENDO CERTO, SO FALTA ARMAZENAR
+        //armazenamento        
+        pp_ListaPlaylist[indiceDaPlaylist]->indice = indice;
+        pp_ListaPlaylist[indiceDaPlaylist]->qtdMusica = 0;
+        strcpy(pp_ListaPlaylist[indiceDaPlaylist]->nome, nome);
+        pp_ListaPlaylist[indiceDaPlaylist]->Lista_musicas = (tMusica**)malloc(sizeof(tMusica*) * qtdMusica);
 
-        /*
-        pPlaylist->Lista_musicas = malloc(sizeof(tMusica*) * qtdMusica);
-        for(i = 0; i < qtd_musica; i++){
-            pPlaylist->Lista_musicas[i] = Acesso_MusicaDeIndiceX(pp_Musicas ,indiceMusica[i]);
+        for(indiceDaMusica = 0; indiceDaMusica < qtdMusica; indiceDaMusica++){
+            pp_ListaPlaylist[indiceDaPlaylist] = Adiciona_MusicaPlaylist(indiceMusica[indiceDaMusica], pp_ListaPlaylist[indiceDaPlaylist], pp_Musicas, pp_Artistas);
         }
-        */
-        printf("\n");
+        free(indiceMusica);
     }
     
     return pp_ListaPlaylist;
 }
 
-
-
-
-
-
-
-
+void Le_Quantidade_Playlists_ArqBinario(FILE* file){
+    int qtdPlaylist = 0;
+    fread(&qtdPlaylist, sizeof(int), 1, file);
+    Acesso_QuantidadePlaylists(qtdPlaylist, VERDADE);
+}
 
 
 // ================fim binario====================
@@ -135,7 +116,6 @@ tPlaylist* Adiciona_MusicaPlaylist(int indice, tPlaylist* p_Playlist, tMusica** 
     p_Playlist->Lista_musicas[posicao] = pp_Musica[indice];
     Incrementa_X_Em_qtd_PresencaMusicaEmPlaylist(pp_Musica[indice], 1);
     Incrementa_X_EmTodosOsArtistasDaMusica(pp_Musica[indice]);
-    
     p_Playlist->qtdMusica++;
     return p_Playlist;
 }
@@ -157,6 +137,21 @@ void Reseta_String(char *nome){
 }
 
 void RecomendaMusicasParecidasComUmaPlaylist(tPlaylist* pPlaylist, tMusica **pp_Musicas,int qtd_MusicaParaRecomendar){
+    int valorValido = 0;
+    if(pPlaylist->qtdMusica <= 0){
+        printf("Playlist vazia, nao eh possivel recomendar musicas!\n");
+        return;
+    }
+    if(qtd_MusicaParaRecomendar <= 0){
+        while(!valorValido){
+            printf("Digite um valor valido: ");
+            scanf("%d%*c", &qtd_MusicaParaRecomendar);
+            if(qtd_MusicaParaRecomendar > 0){
+                valorValido = 1;
+            }
+        }
+        printf("\n");
+    }
     float *p_PropriedadesMusicaIdeal;
     p_PropriedadesMusicaIdeal = CalculaArrayPropriedadesMusicaIdeal(pPlaylist);
     ImprimeXMusicasMaisProximas(pp_Musicas, p_PropriedadesMusicaIdeal, qtd_MusicaParaRecomendar);
@@ -191,7 +186,8 @@ void Imprime_ListarUmaPlaylist(tPlaylist *p_Playlist){
 }
 
 void Imprime_ListarPlaylists(tPlaylist** pp_ListaPlaylist, int qtd_playlists){
-    int i;
+    int i = 0;
+
     printf("===========================================================================\n\n");
     for(i=0; i<qtd_playlists;i++){
         printf("Nome: %s\n", pp_ListaPlaylist[i]->nome);

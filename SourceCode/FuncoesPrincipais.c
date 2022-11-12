@@ -18,7 +18,7 @@ void ExibeMenu(){
 
 tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_Artistas,tPlaylist **pp_ListaPlaylist, FILE *RelatorioMusica, FILE *RelatorioArtista){
     int qtdPlaylist = Acesso_QuantidadePlaylists(0, FALSO);
-    int indiceDaPlaylist = 0, indiceDaMusica = 0, qtd_MusicaParaRecomendar = 0;
+    int indiceDaPlaylist = 0, indiceDaMusica = 0, qtd_MusicaParaRecomendar = 0, valorValido = 0;
 
     switch (opcao){
     case Sair:
@@ -55,21 +55,52 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
     case Listar_Uma_Playlist:
         printf("Indice da playlist: ");
         scanf("%d%*c", &indiceDaPlaylist);
+
+        valorValido = 1;
+        if (indiceDaPlaylist < 0 || indiceDaPlaylist >= Acesso_QuantidadePlaylists(0, FALSO)){
+            valorValido = 0;
+        }
+        while(!valorValido){
+            printf("Digite um indice valido: ");
+            scanf("%d%*c", &indiceDaPlaylist);
+            if (indiceDaPlaylist >= 0 && indiceDaPlaylist < Acesso_QuantidadePlaylists(0, FALSO)){
+                valorValido = 1;
+            }
+        }
+        
         Imprime_ListarUmaPlaylist(pp_ListaPlaylist[indiceDaPlaylist]);
         break;
 
     case Adicionar_Uma_Musica_Na_Playlist: 
-        printf("Indice da Playlist: ");
+        printf("Indice da playlist: ");
         scanf("%d%*c", &indiceDaPlaylist);
+        valorValido = 1;
+        if (indiceDaPlaylist < 0 || indiceDaPlaylist >= Acesso_QuantidadePlaylists(0, FALSO)){
+            valorValido = 0;
+        }
+        while(!valorValido){
+            printf("Digite um indice valido para a playlist: ");
+            scanf("%d%*c", &indiceDaPlaylist);
+            if (indiceDaPlaylist >= 0 && indiceDaPlaylist < Acesso_QuantidadePlaylists(0, FALSO)){
+                valorValido = 1;
+            }
+        }
+    
         printf("Indice da musica: ");
         scanf("%d%*c", &indiceDaMusica);
+
+        while(indiceDaMusica > Acesso_QuantidadeMusicas(0, FALSO)-1 || indiceDaMusica < 0){
+            printf("Nao existe musica com este indice! Indice da musica: ");
+            scanf("%d", &indiceDaMusica);
+            scanf("%*c");
+        }
         
         pp_ListaPlaylist[indiceDaPlaylist] = Realoca_Memoria_PonteiroDeMusica(pp_ListaPlaylist[indiceDaPlaylist]);
         pp_ListaPlaylist[indiceDaPlaylist] = Adiciona_MusicaPlaylist(indiceDaMusica, pp_ListaPlaylist[indiceDaPlaylist], pp_Musicas, pp_Artistas);
         printf("musica adicionada na playlist %d com sucesso!\n", indiceDaPlaylist);
         break;
 
-    case Recomendar_Musicas_Parecidas_Com_Uma_Playlist: // LEMBRAR DE LIBERAR O ARRAY CRIADO ====> Liberado 
+    case Recomendar_Musicas_Parecidas_Com_Uma_Playlist:
         printf("Indice da Playlist: ");
         scanf("%d", &indiceDaPlaylist);
         printf("Numero de musicas a serem recomendadas: ");
@@ -117,6 +148,13 @@ void ListarMusica(tMusica** pp_Musicas){// operacao numero 2
     printf("Indice: ");
     scanf("%d", &indice);
     scanf("%*c");
+
+    while(indice > qtd-1 || indice < 0){
+        printf("Nao existe musica com este indice!\nDigite novamente.\nIndice: ");
+        scanf("%d", &indice);
+        scanf("%*c");
+    }
+    
     Imprime_ListarUmaMusica(pp_Musicas[indice]);
     
     printf("\nDeseja executar a musica? S/N -> ");
@@ -125,7 +163,7 @@ void ListarMusica(tMusica** pp_Musicas){// operacao numero 2
     scanf("%*c");
 
     if(op == 'S' || op =='s'){
-        char command[70];
+        char command[70] = "";
         Reseta_Str(command);
         strcat(command, "firefox https://open.spotify.com/track/");
         strcat(command, Retorna_ID_Musica(pp_Musicas[indice]));
@@ -170,6 +208,17 @@ FILE* AbreArquivoTracksCSV(char *argv[]){
 }
 
 
-//===========novo
+//=========== system ============
+void SystemCreateFoldersCommands(){
+    system("mkdir ../Relatorio");
+    system("touch ../Relatorio/Musica.txt");
+    system("touch ../Relatorio/Artista.txt");
+    system("mkdir ../Playlists");
+}
 
-
+void CloseFiles(FILE* arq1, FILE* arq2, FILE* arq3, FILE* arq4){
+    fclose(arq1);
+    fclose(arq2);
+    fclose(arq3);
+    fclose(arq4);
+}

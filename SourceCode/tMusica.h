@@ -238,8 +238,6 @@ void LiberaTodasAsMusicas(tMusica** pp_musica);
 void LiberaMusica(tMusica* musica);
 
 
-tMusica* Acesso_MusicaDeIndiceX(tMusica** pp_Musicas , int indiceMusica);
-
 int Acesso_IndiceNoArrayMusicaX(tMusica** pp_Musicas , int indice);
 
 #endif

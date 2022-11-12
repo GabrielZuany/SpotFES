@@ -58,4 +58,7 @@ void ListarMusica(tMusica** pp_Musicas);
 void Reseta_Str(char* str);
 //=============novo=======================
 
+void SystemCreateFoldersCommands();
+void CloseFiles(FILE* arq1, FILE* arq2, FILE* arq3, FILE* arq4);
+
 #endif

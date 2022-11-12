@@ -277,6 +277,7 @@ void Imprime_Funcao_BuscarMusica(tMusica *pMusica){
 
 void Imprime_ListarUmaMusica(tMusica* p_Musica){
     printf("--------------------------------------------\n");
+    printf("Nome: %s\n", p_Musica->nome);
     Imprime_Artistas_da_Musica(p_Musica);
     Imprime_PropriedadesDaMusisca(p_Musica->propriedades);
     printf("\n");
@@ -365,11 +366,6 @@ void LiberaMusica(tMusica* musica){
     free(musica->nome);
     free(musica->artistas);
     free(musica->id_artistas);
-}
-
-
-tMusica* Acesso_MusicaDeIndiceX(tMusica** pp_Musicas , int indiceMusica){
-    return pp_Musicas[indiceMusica];
 }
 
 int Acesso_IndiceNoArrayMusicaX(tMusica** pp_Musicas , int indice){
