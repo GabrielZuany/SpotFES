@@ -1,3 +1,0 @@
-1. Makefile correto.
-
-//apagar busca musica de indice X
