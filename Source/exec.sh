@@ -1,1 +1,1 @@
-./exe ../data/artists_2.csv ../data/tracks_2.csv
+valgrind ./exe ../data/artists_3480.csv ../data/tracks_3480.csv

@@ -13,7 +13,6 @@ int main(int argc, char *argv[]){
     FILE* RelatorioMusica = fopen("../Relatorio/Musica.txt", "w");
     FILE* RelatorioArtista = fopen("../Relatorio/Artista.txt", "w"); 
 
-
     // inicializacao de ponteiros
     tArtista **pp_Artistas = NULL;
     pp_Artistas = Inicializa_PonteiroDePonteiroDeArtistas();
