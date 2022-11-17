@@ -7,26 +7,24 @@ SRC = $(wildcard SourceCode/*.c)
 OUT = Objects/
 IN = SourceCode/
 EXE = exe
-ARTIST_FILE = data/artists_2.csv
-TRACKS_FILE = data/tracks_2.csv
+
+all: CreateFolder Compile GenExe
 
 Compile: $(SRC) $(DEPS)
-	$(CC) -o $(OUT)tPropriedades.o $(IN)tPropriedades.c $(CFLAGS)
-	$(CC) -o $(OUT)tArtista.o $(IN)tArtista.c $(CFLAGS)
-	$(CC) -o $(OUT)tMusica.o $(IN)tMusica.c $(CFLAGS)
-	$(CC) -o $(OUT)tPlaylist.o $(IN)tPlaylist.c $(CFLAGS)
-	$(CC) -o $(OUT)FuncoesPrincipais.o $(IN)FuncoesPrincipais.c $(CFLAGS)
-	$(CC) -o $(OUT)main.o $(IN)main.c $(CFLAGS)
+	@$(CC) -o $(OUT)tPropriedades.o $(IN)tPropriedades.c $(CFLAGS)
+	@$(CC) -o $(OUT)tArtista.o $(IN)tArtista.c $(CFLAGS)
+	@$(CC) -o $(OUT)tMusica.o $(IN)tMusica.c $(CFLAGS)
+	@$(CC) -o $(OUT)tPlaylist.o $(IN)tPlaylist.c $(CFLAGS)
+	@$(CC) -o $(OUT)FuncoesPrincipais.o $(IN)FuncoesPrincipais.c $(CFLAGS)
+	@$(CC) -o $(OUT)main.o $(IN)main.c $(CFLAGS)
+	@echo compilado objetos!
 
 GenExe:
-	$(CC) -o $(OUT)$(EXE) $(OBJ) -lm
-
-Execute:
-	chmod +777 $(OUT)$(EXE)
-	./$(OUT)$(EXE) $(ARTIST_FILE) $(TRACKS_FILE)
+	@$(CC) -o $(IN)$(EXE) $(OBJ) -lm
+	@echo compilado executavel!
 
 CreateFolder:
-	mkdir Objects
+	@mkdir -p Objects
 
 clear:
-	rm -rf Objects
+	@rm -rf Objects && rm exe
