@@ -9,6 +9,7 @@
 #define Adicionar_Uma_Musica_Na_Playlist 6
 #define Recomendar_Musicas_Parecidas_Com_Uma_Playlist 7
 #define Gerar_Relatorio 8
+#define GRN "\33[0;32m"
 
 
 //=========== system ============
@@ -27,6 +28,16 @@ void CloseFiles(FILE* arq1, FILE* arq2, FILE* arq3, FILE* arq4){
 }
 
 // --------- Interatividade com o Usuário ----------
+
+void ImprimeTitulo(){
+    printf(GRN "\n=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n\n");
+
+    printf("   ⠀⠀⠀⢀⣠⣤⣤⣶⣶⣶⣶⣤⣤⣄⡀\n⠀ ⠀⢀⣤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⡀\n⠀⠀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⠀\n⢀⣾⣿⡿⠿⠛⠛⠛⠉⠉⠉⠉⠛⠛⠛⠿⠿⣿⣿⣿⣿⣿⣷⡀⠀\n⣾⣿⣿⣇⠀⣀⣀⣠⣤⣤⣤⣤⣤⣀⣀⠀⠀⠀⠈⠙⠻⣿⣿⣷⠀\n⣿⣿⣿⣿⡿⠿⠟⠛⠛⠛⠛⠛⠛⠻⠿⢿⣿⣶⣤⣀⣠⣿⣿⣿⡄       ____             _   ______ ______  _____ \n⣿⣿⣿⣿⣇⣀⣀⣤⣤⣤⣤⣤⣄⣀⣀⠀⠀⠉⠛⢿⣿⣿⣿⣿      / ____|           | | |  ____|  ____|/ ____|\n⣿⣿⣿⣿⣿⠿⠿⠛⠛⠛⠛⠛⠛⠿⠿⣿⣶⣦⣤⣾⣿⣿⣿⣿⠃    | (___  ____   ___ | |_| |__  | |__  | (___  \n⢿⣿⣿⣿⣿⣤⣤⣤⣤⣶⣶⣦⣤⣤⣄⡀⠈⠙⣿⣿⣿⣿⣿⡿      \\___ \\| '_ \\ / _ \\| __|  __| |  __|  \\___ \\ \n⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣾⣿⣿⣿⣿⡿⠁      ____) | |_) | (_) | |_| |    | |____ ____) | \n⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟       |_____/|_.__/ \\___/ \\__|_|    |______|_____/ \n⠀⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠁               | |                                   \n⠀⠀⠀⠀⠀⠀⠈⠙⠛⠛⠿⠿⠿⠿⠛⠛⠋⠁                  |_| \n                                      \n");
+    printf("Bem Vind@ ao SpotFES!\nSpotFES é um sistema para recomendação de músicas utilizando uma base de dados extraída de um serviço de streaming.\n\n");
+    printf("| Gabriel Zuany | Lorenzo Fiorot |\n\n");
+
+    printf("\n=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n\n");
+}
 
 void ExibeMenu(){
     printf("\nEscolha uma opcao\n0 - Sair\n1 - Buscar musicas\n2 - Listar musica\n3 - Criar playlist\n4 - Listar todas as playlists\n5 - Listar uma playlist\n6 - Adicionar musica na playlist\n7 - Recomendar musica parecida\n8 - Gerar relatorio\n-> ");

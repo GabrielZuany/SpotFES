@@ -9,6 +9,8 @@
 #define VERDADE 1
 #define FALSO 0
 
+void ImprimeTitulo();
+
 /**
  * @brief Cria diretorios ao iniciar o programa.
  */

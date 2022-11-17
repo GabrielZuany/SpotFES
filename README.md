@@ -1,6 +1,7 @@
 # INF16153 - Programação II - DI/UFES
 # Trabalho Prático  I -  SpotFES
 
+
 ## 1. Objetivos
 
 O trabalho visa o desenvolvimento das habilidades de criação de structs, gerenciamento de memória alocada dinamicamente, manipulação de arquivos dos tipos texto e binário, organização e documentação correta de códigos-fonte e compilação automática de código. 

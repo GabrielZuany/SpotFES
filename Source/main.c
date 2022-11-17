@@ -2,8 +2,9 @@
 #include <math.h>
 #define FALSO 0
 #define VERDADE 1
+#define RESET_COLOR "\033[0m"
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[]){    
     // abertura de arquivos
     FILE* artista_file = AbreArquivoArtistasCSV(argc, argv);
     FILE* tracks_file = AbreArquivoTracksCSV(argv);
@@ -12,6 +13,8 @@ int main(int argc, char *argv[]){
     
     FILE* RelatorioMusica = fopen("../Relatorio/Musica.txt", "w");
     FILE* RelatorioArtista = fopen("../Relatorio/Artista.txt", "w"); 
+
+    ImprimeTitulo();
 
     // inicializacao de ponteiros
     tArtista **pp_Artistas = NULL;
@@ -54,6 +57,8 @@ int main(int argc, char *argv[]){
 
     fclose(fPlaylists_Cadastradas);
     CloseFiles(RelatorioMusica, RelatorioArtista, tracks_file, artista_file);
+
+    printf("Programa finalizado!\n" RESET_COLOR);
     return 0;
 }
 
