@@ -20,11 +20,11 @@ Compile: $(SRC) $(DEPS)
 	@echo compilado objetos!
 
 GenExe:
-	@$(CC) -o $(EXE) $(OBJ) -lm
+	@$(CC) -o $(IN)$(EXE) $(OBJ) -lm
 	@echo compilado executavel!
 
 CreateFolder:
 	@mkdir -p Objects
 
 clear:
-	@rm -rf Objects && rm exe
+	@rm -rf Objects && rm $(IN)exe
