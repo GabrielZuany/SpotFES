@@ -1,11 +1,11 @@
 CC=gcc
 
 CFLAGS=-c -lm -Wall -pedantic
-DEPS = $(wildcard SourceCode/*.h)
+DEPS = $(wildcard Headers/*.h)
 OBJ = $(wildcard Objects/*.o)
-SRC = $(wildcard SourceCode/*.c)
+SRC = $(wildcard Source/*.c)
 OUT = Objects/
-IN = SourceCode/
+IN = Source/
 EXE = exe
 
 all: CreateFolder Compile GenExe
@@ -20,7 +20,7 @@ Compile: $(SRC) $(DEPS)
 	@echo compilado objetos!
 
 GenExe:
-	@$(CC) -o $(IN)$(EXE) $(OBJ) -lm
+	@$(CC) -o $(EXE) $(OBJ) -lm
 	@echo compilado executavel!
 
 CreateFolder:
