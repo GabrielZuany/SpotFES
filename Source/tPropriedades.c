@@ -1,4 +1,4 @@
-#include "tPropriedades.h"
+#include "../Headers/tPropriedades.h"
 
 struct tPropriedades{
     float danceability;

@@ -1,4 +1,4 @@
-#include "FuncoesPrincipais.h"
+#include "../Headers/FuncoesPrincipais.h"
 
 #define Sair 0
 #define Buscar_Musica 1

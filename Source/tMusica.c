@@ -1,4 +1,4 @@
-#include "tMusica.h"
+#include "../Headers/tMusica.h"
 #define multiplicador_malloc 1
 #define FALSO 0
 #define VERDADE 1

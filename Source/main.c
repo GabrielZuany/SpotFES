@@ -1,4 +1,4 @@
-#include "FuncoesPrincipais.h"
+#include "../Headers/FuncoesPrincipais.h"
 #include <math.h>
 #define FALSO 0
 #define VERDADE 1

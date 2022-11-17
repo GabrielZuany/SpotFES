@@ -1,4 +1,0 @@
-registro
-2
-0 2 7 pastosa 827 444 
-1 1 7 nervosa 22 

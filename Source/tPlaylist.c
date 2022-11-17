@@ -1,4 +1,4 @@
-#include "tPlaylist.h"
+#include "../Headers/tPlaylist.h"
 #define QTD_PROPRIEDADES_ANALISE 8
 #define FALSO 0
 #define VERDADE 1

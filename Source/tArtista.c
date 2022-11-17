@@ -1,4 +1,4 @@
-#include "tArtista.h"
+#include "../Headers/tArtista.h"
 #define multiplicador_malloc 1
 #define VERDADE 1
 #define FALSO 0
