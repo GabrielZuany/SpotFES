@@ -1,3 +1,11 @@
+/**
+ * @file main.c
+ * @author Gabriel Zuany Duarte Vargas e Lorenzo Rizzi Fiorot
+ * @version 1.1
+ * @date 2022-11-27 (last update)
+ * @copyright Copyright (c) 2022
+ */
+
 #include "../Headers/FuncoesPrincipais.h"
 #include <math.h>
 #define FALSO 0
