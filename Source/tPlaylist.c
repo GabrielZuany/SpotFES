@@ -141,16 +141,21 @@ void RecomendaMusicasParecidasComUmaPlaylist(tPlaylist* pPlaylist, tMusica **pp_
         printf("Playlist vazia, nao eh possivel recomendar musicas!\n");
         return;
     }
-    if(qtd_MusicaParaRecomendar <= 0){
-        while(!valorValido){
-            printf("Digite um valor valido: ");
-            scanf("%d%*c", &qtd_MusicaParaRecomendar);
-            if(qtd_MusicaParaRecomendar > 0){
-                valorValido = 1;
-            }
-        }
-        printf("\n");
+
+    while(qtd_MusicaParaRecomendar > Acesso_QuantidadeMusicas(0, FALSO)){
+        printf("Valor invalido, digite novamente: ");
+        scanf("%d", &qtd_MusicaParaRecomendar);
     }
+
+    while(!valorValido){
+        printf("Digite um valor valido: ");
+        scanf("%d%*c", &qtd_MusicaParaRecomendar);
+        if(qtd_MusicaParaRecomendar > 0 && qtd_MusicaParaRecomendar <= Acesso_QuantidadeMusicas(0, FALSO)){
+            valorValido = 1;
+        }
+    }
+    printf("\n");
+
     float *p_PropriedadesMusicaIdeal;
     p_PropriedadesMusicaIdeal = CalculaArrayPropriedadesMusicaIdeal(pPlaylist);
     ImprimeXMusicasMaisProximas(pp_Musicas, p_PropriedadesMusicaIdeal, qtd_MusicaParaRecomendar);

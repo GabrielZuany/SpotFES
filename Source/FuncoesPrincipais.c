@@ -130,8 +130,17 @@ tPlaylist** ExecutaOpcaoUsuario(int opcao, tMusica** pp_Musicas, tArtista** pp_A
         break;
 
     case Recomendar_Musicas_Parecidas_Com_Uma_Playlist:
-        printf("Indice da Playlist: ");
-        scanf("%d", &indiceDaPlaylist);
+        while(1){
+            printf("Indice da Playlist: ");
+            scanf("%d", &indiceDaPlaylist);
+
+            if(indiceDaPlaylist < qtdPlaylist && indiceDaPlaylist >= 0){
+                break;
+            }
+
+            printf("Indice invalido, digite novamente!\n");
+        }
+
         printf("Numero de musicas a serem recomendadas: ");
         scanf("%d", &qtd_MusicaParaRecomendar);
         RecomendaMusicasParecidasComUmaPlaylist(pp_ListaPlaylist[indiceDaPlaylist], pp_Musicas, qtd_MusicaParaRecomendar);
