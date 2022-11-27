@@ -136,24 +136,17 @@ void Reseta_String(char *nome){
 }
 
 void RecomendaMusicasParecidasComUmaPlaylist(tPlaylist* pPlaylist, tMusica **pp_Musicas,int qtd_MusicaParaRecomendar){
-    int valorValido = 0;
+    
     if(pPlaylist->qtdMusica <= 0){
         printf("Playlist vazia, nao eh possivel recomendar musicas!\n");
         return;
     }
 
-    while(qtd_MusicaParaRecomendar > Acesso_QuantidadeMusicas(0, FALSO)){
+    while(qtd_MusicaParaRecomendar > Acesso_QuantidadeMusicas(0, FALSO) || qtd_MusicaParaRecomendar < 0){
         printf("Valor invalido, digite novamente: ");
         scanf("%d", &qtd_MusicaParaRecomendar);
     }
 
-    while(!valorValido){
-        printf("Digite um valor valido: ");
-        scanf("%d%*c", &qtd_MusicaParaRecomendar);
-        if(qtd_MusicaParaRecomendar > 0 && qtd_MusicaParaRecomendar <= Acesso_QuantidadeMusicas(0, FALSO)){
-            valorValido = 1;
-        }
-    }
     printf("\n");
 
     float *p_PropriedadesMusicaIdeal;
